@@ -2,64 +2,66 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Volary - Soutiens ton créateur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soutien à Volary</title>
   <style>
     body {
       background-color: #0f0f0f;
       color: #ffffff;
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
-      padding: 2rem;
+      padding: 50px;
     }
     h1 {
-      color: #a020f0;
-      font-size: 2.5rem;
+      font-size: 2.5em;
+      margin-bottom: 20px;
     }
     p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
+      font-size: 1.2em;
+      margin-bottom: 40px;
     }
     .don-buttons {
-      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
     }
-    .don-buttons a {
+    .btn {
       display: inline-block;
-      margin: 1rem;
-      text-decoration: none;
-      background-color: #a020f0;
-      color: white;
-      padding: 1rem 2rem;
+      padding: 15px 30px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border: none;
       border-radius: 8px;
-      font-size: 1.2rem;
-      transition: background-color 0.3s ease;
+      text-decoration: none;
+      color: white;
+      transition: transform 0.2s ease;
     }
-    .don-buttons a:hover {
-      background-color: #7a1cc0;
+    .btn:hover {
+      transform: scale(1.05);
     }
-    footer {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #888;
+    .paypal {
+      background-color: #0070ba;
+    }
+    .stripe {
+      background-color: #635bff;
     }
   </style>
 </head>
 <body>
-
   <h1>💜 Soutiens Volary</h1>
-  <p>Je suis créateur de contenu gaming sur TikTok. Si tu veux me soutenir, c’est ici que ça se passe !</p>
+  <p>Chaque don m’aide à continuer mes lives TikTok et à faire évoluer le projet. Merci infiniment 🙏</p>
 
   <div class="don-buttons">
-    <!-- Lien PayPal -->
-    <a href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank">
+    <!-- Bouton PayPal -->
+    <a href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" class="btn paypal" target="_blank">
       Don via PayPal
     </a>
+
+    <!-- Bouton Stripe -->
+    <a href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" class="btn stripe" target="_blank">
+      Don par Carte Bancaire
+    </a>
   </div>
-
-  <footer>
-    Merci pour ton soutien 🙏<br>
-    © Volary 2025
-  </footer>
-
 </body>
 </html>
