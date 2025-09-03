@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Volary — Soutenir le contenu</title>
   <meta name="description" content="Soutiens mes lives Fortnite et mes vidéos. Dons sécurisés par carte (Stripe) ou PayPal.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -33,29 +34,25 @@
 
     .container{max-width:1000px; margin:0 auto; padding:0 24px}
 
-    /* NAVBAR */
+    /* ===== NAVBAR ===== */
     header{
-      position: sticky;
-      top:0; z-index:10;
-      background: rgba(11,15,23,.7);
+      position:sticky; top:0; z-index:10;
+      background:rgba(11,15,23,.7);
       backdrop-filter: blur(8px);
       border-bottom:1px solid rgba(255,255,255,.06);
     }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
-      padding:14px 0;
-    }
-    .brand{display:flex; align-items:center; gap:12px}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 0}
+    .brand{display:flex; align-items:center; gap:10px}
     .logo{
-      width:38px; height:38px; border-radius:12px;
+      width:34px; height:34px; border-radius:10px;
       display:grid; place-items:center;
       background: linear-gradient(135deg, var(--brand), var(--brand-2));
       box-shadow: 0 8px 26px rgba(0,0,0,.35);
     }
-    .logo svg{filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
     .brand-name{font-weight:800; letter-spacing:.2px}
     .badge{padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.09); font-size:13px}
 
+    .menu{display:flex; align-items:center; gap:8px}
     .menu a{
       opacity:.95;
       padding:8px 12px;
@@ -65,8 +62,36 @@
     .menu a:hover{background:rgba(255,255,255,.06)}
     .icon{width:18px; height:18px; display:inline-block}
 
-    /* HERO */
-    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center; padding:36px 0}
+    /* Burger */
+    .burger{
+      display:none; cursor:pointer;
+      width:40px; height:40px; border-radius:10px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      display:none; align-items:center; justify-content:center;
+    }
+    .burger span{width:20px; height:2px; background:#e5e7eb; position:relative; display:block}
+    .burger span::before,.burger span::after{
+      content:""; position:absolute; left:0; right:0; height:2px; background:#e5e7eb;
+    }
+    .burger span::before{top:-6px}
+    .burger span::after{bottom:-6px}
+
+    /* Drawer mobile */
+    .drawer{
+      display:none;
+      position:absolute; left:0; right:0; top:100%; background:rgba(11,15,23,.98);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding:10px 16px 12px;
+    }
+    .drawer a{
+      display:flex; align-items:center; gap:8px;
+      padding:10px 8px; border-radius:10px;
+    }
+    .drawer a:hover{background:rgba(255,255,255,.06)}
+
+    /* ===== HERO ===== */
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center; padding:32px 0}
     .h1{font-size: clamp(28px, 4vw, 44px); line-height:1.15; font-weight:800}
     .muted{color:var(--muted)}
     .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
@@ -80,7 +105,7 @@
     .btn.primary{background:linear-gradient(135deg, var(--brand), var(--brand-2)); border:none}
     .btn.tiktok{background:#000; border:1px solid rgba(255,255,255,.12); color:#fff}
 
-    /* SECTIONS / CARTES */
+    /* ===== CARTES ===== */
     .grid{display:grid; gap:18px}
     .grid-3{grid-template-columns:repeat(3, minmax(0,1fr))}
     .card{
@@ -114,17 +139,38 @@
     footer{margin:40px 0 24px; font-size:14px}
     .legal{font-size:13px; color:var(--muted)}
 
-    @media (max-width:900px){ .hero{grid-template-columns:1fr} }
+    /* ===== MOBILE TWEAKS ===== */
+    @media (max-width: 900px){
+      .container{padding:0 16px}
+      .badge{display:none}
+      .menu{display:none}
+      .burger{display:flex}
+      .drawer{display:none}
+      .drawer.open{display:block}
+
+      .hero{grid-template-columns:1fr; gap:16px; padding:24px 0}
+      .h1{font-size:28px; line-height:1.2}
+      .cta{gap:10px}
+      .cta .btn{width:100%; justify-content:center}
+
+      .grid-3{grid-template-columns:1fr}
+      .card{padding:16px}
+      .copywrap{gap:8px; flex-wrap:wrap}
+      .epic-icon{width:24px; height:24px}
+      .copybtn{padding:6px 10px; font-size:14px}
+      footer{font-size:13px}
+      .legal{font-size:12.5px}
+    }
   </style>
 </head>
 <body>
-  <!-- NAVBAR -->
+  <!-- ===== NAVBAR ===== -->
   <header>
     <div class="container nav">
       <div class="brand">
         <div class="logo" aria-hidden="true">
-          <!-- petit logo éclair -->
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+          <!-- petit logo -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 12c0-4.97 4.03-9 9-9 2.39 0 4.57.94 6.19 2.47l-2.12 2.12A6.98 6.98 0 0 0 12 5c-3.87 0-7 3.13-7 7s3.13 7 7 7c1.93 0 3.68-.79 4.95-2.05l2.12 2.12A8.96 8.96 0 0 1 12 21c-4.97 0-9-4.03-9-9Zm9-5a5 5 0 0 1 5 5h-3l4 4 4-4h-3a7 7 0 1 0-7 7v-2a5 5 0 1 1 0-10Z"/>
           </svg>
         </div>
@@ -132,9 +178,9 @@
         <span class="badge">Soutiens le contenu</span>
       </div>
 
-      <div class="menu">
+      <nav class="menu" aria-label="Navigation principale">
         <a href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener">
-          <!-- Logo TikTok OFFICIEL -->
+          <!-- Logo TikTok officiel -->
           <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
             <path d="M223.6 97.4a90.4 90.4 0 0 1-53.2-17.1v73.7c0 37.5-30.5 68-68 68s-68-30.5-68-68 30.5-68 68-68c2.9 0 5.8.2 8.6.6v34.9a33.6 33.6 0 1 0 23.4 32V14h34.8a55.5 55.5 0 0 0 54.4 55.2v28.2Z"/>
           </svg>
@@ -142,26 +188,36 @@
         </a>
         <a href="#soutenir">Soutenir</a>
         <a href="#mentions">Mentions légales</a>
-      </div>
+      </nav>
+
+      <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="drawer">
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Drawer mobile -->
+    <div class="drawer" id="drawer">
+      <a href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+          <path d="M223.6 97.4a90.4 90.4 0 0 1-53.2-17.1v73.7c0 37.5-30.5 68-68 68s-68-30.5-68-68 30.5-68 68-68c2.9 0 5.8.2 8.6.6v34.9a33.6 33.6 0 1 0 23.4 32V14h34.8a55.5 55.5 0 0 0 54.4 55.2v28.2Z"/>
+        </svg> TikTok
+      </a>
+      <a href="#soutenir">Soutenir</a>
+      <a href="#mentions">Mentions légales</a>
     </div>
   </header>
 
+  <!-- ===== CONTENU ===== -->
   <main class="container">
-    <!-- HERO -->
     <section class="hero">
       <div>
         <h1 class="h1">Soutiens mes lives <span class="muted">Fortnite</span> & mes vidéos</h1>
         <p class="muted">Chaque contribution m’aide à financer le matériel, le montage et à proposer plus de contenu gratuit. Merci pour votre soutien 🙏</p>
 
         <div class="cta">
-          <a class="btn primary" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">
-            💳 Don par carte (Stripe)
-          </a>
-          <a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener">
-            🅿️ Don via PayPal
-          </a>
+          <a class="btn primary" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">💳 Don par carte (Stripe)</a>
+          <a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener">🅿️ Don via PayPal</a>
           <a class="btn tiktok" href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener">
-            <!-- Logo TikTok OFFICIEL -->
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
               <path d="M223.6 97.4a90.4 90.4 0 0 1-53.2-17.1v73.7c0 37.5-30.5 68-68 68s-68-30.5-68-68 30.5-68 68-68c2.9 0 5.8.2 8.6.6v34.9a33.6 33.6 0 1 0 23.4 32V14h34.8a55.5 55.5 0 0 0 54.4 55.2v28.2Z"/>
             </svg>
@@ -173,7 +229,6 @@
       </div>
     </section>
 
-    <!-- CARTES -->
     <section id="soutenir" class="grid grid-3">
       <div class="card">
         <h3>Carte bancaire (Stripe)</h3>
@@ -198,7 +253,6 @@
       </div>
     </section>
 
-    <!-- MENTIONS -->
     <section class="card" id="mentions" style="margin-top:28px">
       <h3>Mentions légales</h3>
       <p>
@@ -221,6 +275,21 @@
   <div id="toast" class="toast" role="status" aria-live="polite">Code copié !</div>
 
   <script>
+    // Burger menu
+    const burger = document.querySelector('.burger');
+    const drawer = document.getElementById('drawer');
+    if(burger && drawer){
+      burger.addEventListener('click', () => {
+        const open = drawer.classList.toggle('open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        burger.setAttribute('aria-expanded','false');
+      }));
+    }
+
+    // Copier code créateur + toast
     async function copyCreatorCode(){
       const code = 'VOLARY';
       try{
@@ -228,11 +297,8 @@
           await navigator.clipboard.writeText(code);
         }else{
           const tmp = document.createElement('textarea');
-          tmp.value = code;
-          document.body.appendChild(tmp);
-          tmp.select();
-          document.execCommand('copy');
-          tmp.remove();
+          tmp.value = code; document.body.appendChild(tmp);
+          tmp.select(); document.execCommand('copy'); tmp.remove();
         }
         showToast('Code copié !');
       }catch(e){
