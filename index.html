@@ -1,319 +1,241 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Volary — Soutenir le contenu</title>
-  <meta name="description" content="Soutiens mes lives. Dons sécurisés par carte (Stripe) ou PayPal.">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    :root{
-      --bg:#0b0f17;
-      --card:#111827;
-      --muted:#9aa4b2;
-      --text:#e5e7eb;
-      --brand:#7c3aed;
-      --brand-2:#22d3ee;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0}
-    body{
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,ui-sans-serif;
-      background:
-        radial-gradient(1200px 800px at 10% -10%, rgba(124,58,237,.25), transparent 60%),
-        radial-gradient(1200px 800px at 110% 0%, rgba(34,211,238,.2), transparent 60%),
-        var(--bg);
-      color:var(--text);
-      line-height:1.6;
-    }
-    a{color:inherit; text-decoration:none}
-
-    .container{max-width:1000px; margin:0 auto; padding:0 24px}
-
-    /* ===== NAVBAR ===== */
-    header{
-      position:sticky; top:0; z-index:10;
-      background:rgba(11,15,23,.7);
-      backdrop-filter: blur(8px);
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 0}
-    .brand{display:flex; align-items:center; gap:10px}
-    .logo{
-      width:34px; height:34px; border-radius:10px;
-      display:grid; place-items:center;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      box-shadow: 0 8px 26px rgba(0,0,0,.35);
-    }
-    .brand-name{font-weight:800; letter-spacing:.2px}
-    .badge{padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.09); font-size:13px}
-
-    .menu{display:flex; align-items:center; gap:8px}
-    .menu a{
-      opacity:.95;
-      padding:8px 12px;
-      border-radius:10px;
-      display:inline-flex; align-items:center; gap:8px;
-    }
-    .menu a:hover{background:rgba(255,255,255,.06)}
-    .icon{width:18px; height:18px; display:inline-block}
-
-    /* Burger */
-    .burger{
-      display:none; cursor:pointer;
-      width:40px; height:40px; border-radius:10px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      display:none; align-items:center; justify-content:center;
-    }
-    .burger span{width:20px; height:2px; background:#e5e7eb; position:relative; display:block}
-    .burger span::before,.burger span::after{
-      content:""; position:absolute; left:0; right:0; height:2px; background:#e5e7eb;
-    }
-    .burger span::before{top:-6px}
-    .burger span::after{bottom:-6px}
-
-    /* Drawer mobile */
-    .drawer{
-      display:none;
-      position:absolute; left:0; right:0; top:100%; background:rgba(11,15,23,.98);
-      border-bottom:1px solid rgba(255,255,255,.08);
-      padding:10px 16px 12px;
-    }
-    .drawer a{
-      display:flex; align-items:center; gap:8px;
-      padding:10px 8px; border-radius:10px;
-    }
-    .drawer a:hover{background:rgba(255,255,255,.06)}
-
-    /* ===== HERO ===== */
-    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center; padding:32px 0}
-    .h1{font-size: clamp(28px, 4vw, 44px); line-height:1.15; font-weight:800}
-    .muted{color:var(--muted)}
-    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding:12px 16px; border-radius:12px; font-weight:700;
-      border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.06);
-      transition:.2s; cursor:pointer;
-    }
-    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.1)}
-    .btn.primary{background:linear-gradient(135deg, var(--brand), var(--brand-2)); border:none}
-    .btn.tiktok{background:#000; border:1px solid rgba(255,255,255,.12); color:#fff}
-
-    /* ===== CARTES ===== */
-    .grid{display:grid; gap:18px}
-    .grid-3{grid-template-columns:repeat(3, minmax(0,1fr))}
-    .card{
-      background:rgba(17,24,39,.72);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:18px;
-      padding:22px;
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      line-height: 1.6;
     }
 
-    .copywrap{display:flex; align-items:center; gap:10px; margin-top:10px}
-    .copybtn{padding:6px 10px; border-radius:8px; background:rgba(255,255,255,.1); border:none; cursor:pointer; color:#fff; font-weight:600; font-size:14px}
-    .copybtn:hover{background:rgba(255,255,255,.2)}
-    .epic-icon{width:28px; height:28px}
-
-    /* Toast */
-    .toast{
-      position:fixed; right:24px; bottom:24px;
-      background: rgba(17,24,39,.95);
-      color:#e5e7eb;
-      border:1px solid rgba(255,255,255,.08);
-      padding:10px 14px; border-radius:10px;
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      font-weight:600; font-size:14px;
-      opacity:0; transform:translateY(8px);
-      pointer-events:none; transition:opacity .2s ease, transform .2s ease;
-      z-index:9999;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: #111827;
     }
-    .toast.show{opacity:1; transform:translateY(0)}
 
-    footer{margin:40px 0 24px; font-size:14px}
-    .legal{font-size:13px; color:var(--muted)}
+    header .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-    /* ===== MOBILE TWEAKS ===== */
-    @media (max-width: 900px){
-      .container{padding:0 16px}
-      .badge{display:none}
-      .menu{display:none}
-      .burger{display:flex}
-      .drawer{display:none}
-      .drawer.open{display:block}
+    header nav a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+    }
 
-      .hero{grid-template-columns:1fr; gap:16px; padding:24px 0}
-      .h1{font-size:28px; line-height:1.2}
-      .cta{gap:10px}
-      .cta .btn{width:100%; justify-content:center}
+    header nav a:hover {
+      text-decoration: underline;
+    }
 
-      .grid-3{grid-template-columns:1fr}
-      .card{padding:16px}
-      .copywrap{gap:8px; flex-wrap:wrap}
-      .epic-icon{width:24px; height:24px}
-      .copybtn{padding:6px 10px; font-size:14px}
-      footer{font-size:13px}
-      .legal{font-size:12.5px}
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 10px 5px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.25s ease-in-out;
+    }
+
+    .btn-stripe {
+      background: linear-gradient(90deg, #6366f1, #06b6d4);
+      color: white;
+    }
+
+    .btn-paypal {
+      background: #1e293b;
+      color: white;
+      border: 1px solid #475569;
+    }
+
+    .btn-tiktok {
+      background: black;
+      color: white;
+    }
+
+    /* Effet hover lumineux */
+    .btn:hover {
+      opacity: 0.95;
+      transform: translateY(-3px);
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.6), 0 0 20px rgba(6, 182, 212, 0.4);
+    }
+
+    /* ✅ Effet clic/rebond */
+    .btn:active {
+      transform: scale(0.92);
+      box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+      justify-content: center;
+    }
+
+    .card {
+      background: #111827;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 250px;
+      text-align: center;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 220px;
+
+      border: 1px solid #1f2937;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.7), 0 0 25px rgba(6, 182, 212, 0.5);
+      transform: translateY(-5px);
+    }
+
+    footer {
+      background: #111827;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      border-top: 1px solid #1f2937;
+    }
+
+    .copy-btn {
+      background: #374151;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: all 0.25s ease-in-out;
+    }
+
+    .copy-btn:hover {
+      background: #4b5563;
+      transform: translateY(-2px);
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.6), 0 0 15px rgba(6, 182, 212, 0.4);
+    }
+
+    /* ✅ Effet clic sur bouton Copier */
+    .copy-btn:active {
+      transform: scale(0.9);
+    }
+
+    .copy-alert {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .copy-alert.show {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <!-- ===== NAVBAR ===== -->
   <header>
-    <div class="container nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <!-- petit logo -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 12c0-4.97 4.03-9 9-9 2.39 0 4.57.94 6.19 2.47l-2.12 2.12A6.98 6.98 0 0 0 12 5c-3.87 0-7 3.13-7 7s3.13 7 7 7c1.93 0 3.68-.79 4.95-2.05l2.12 2.12A8.96 8.96 0 0 1 12 21c-4.97 0-9-4.03-9-9Zm9-5a5 5 0 0 1 5 5h-3l4 4 4-4h-3a7 7 0 1 0-7 7v-2a5 5 0 1 1 0-10Z"/>
-          </svg>
-        </div>
-        <span class="brand-name">Volary</span>
-        <span class="badge">Soutiens le contenu</span>
-      </div>
-
-      <nav class="menu" aria-label="Navigation principale">
-        <a href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener">
-          <!-- Logo TikTok officiel -->
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
-            <path d="M223.6 97.4a90.4 90.4 0 0 1-53.2-17.1v73.7c0 37.5-30.5 68-68 68s-68-30.5-68-68 30.5-68 68-68c2.9 0 5.8.2 8.6.6v34.9a33.6 33.6 0 1 0 23.4 32V14h34.8a55.5 55.5 0 0 0 54.4 55.2v28.2Z"/>
-          </svg>
-          TikTok
-        </a>
-        <a href="#soutenir">Soutenir</a>
-        <a href="#mentions">Mentions légales</a>
-      </nav>
-
-      <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="drawer">
-        <span></span>
-      </button>
-    </div>
-
-    <!-- Drawer mobile -->
-    <div class="drawer" id="drawer">
-      <a href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener">
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
-          <path d="M223.6 97.4a90.4 90.4 0 0 1-53.2-17.1v73.7c0 37.5-30.5 68-68 68s-68-30.5-68-68 30.5-68 68-68c2.9 0 5.8.2 8.6.6v34.9a33.6 33.6 0 1 0 23.4 32V14h34.8a55.5 55.5 0 0 0 54.4 55.2v28.2Z"/>
-        </svg> TikTok
-      </a>
-      <a href="#soutenir">Soutenir</a>
-      <a href="#mentions">Mentions légales</a>
-    </div>
+    <div class="logo">🌌 Volary <span style="font-weight:normal;">Soutiens le contenu</span></div>
+    <nav>
+      <a href="https://www.tiktok.com/@volary2.0" target="_blank">🎵 TikTok</a>
+      <a href="#soutenir">🤝 Soutenir</a>
+      <a href="#mentions">📜 Mentions légales</a>
+    </nav>
   </header>
 
-  <!-- ===== CONTENU ===== -->
-  <main class="container">
-    <section class="hero">
-      <div>
-        <h1 class="h1">Soutiens mes lives & mes vidéos</h1>
-        <p class="muted">Chaque contribution m’aide à financer le matériel, le montage et à proposer plus de contenu gratuit. Merci pour votre soutien 🙏</p>
+  <main>
+    <h1>Soutiens mes lives & mes vidéos</h1>
+    <p>Chaque contribution m’aide à financer le matériel, le montage et à proposer plus de contenu gratuit. Merci pour votre soutien 🙏</p>
 
-        <div class="cta">
-          <a class="btn primary" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">💳 Don par carte (Stripe)</a>
-          <a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener">🅿️ Don via PayPal</a>
-          <a class="btn tiktok" href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
-              <path d="M223.6 97.4a90.4 90.4 0 0 1-53.2-17.1v73.7c0 37.5-30.5 68-68 68s-68-30.5-68-68 30.5-68 68-68c2.9 0 5.8.2 8.6.6v34.9a33.6 33.6 0 1 0 23.4 32V14h34.8a55.5 55.5 0 0 0 54.4 55.2v28.2Z"/>
-            </svg>
-            Me suivre sur TikTok
-          </a>
-        </div>
+    <div>
+      <a class="btn btn-stripe" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank">💳 Don par carte (Stripe)</a>
+      <a class="btn btn-paypal" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank">💙 Don via PayPal</a>
+      <a class="btn btn-tiktok" href="https://www.tiktok.com/@volary2.0" target="_blank">🎵 Me suivre sur TikTok</a>
+    </div>
 
-        <p class="muted" style="margin-top:10px">Paiement 100% sécurisé via Stripe/PayPal.</p>
-      </div>
-    </section>
+    <p>Paiement 100% sécurisé via Stripe/PayPal.</p>
 
-    <section id="soutenir" class="grid grid-3">
+    <div class="cards" id="soutenir">
       <div class="card">
         <h3>Carte bancaire (Stripe)</h3>
-        <p class="muted">Montant libre, sans compte nécessaire.</p>
-        <p><a class="btn primary" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">Aller sur Stripe →</a></p>
+        <p>Montant libre, sans compte nécessaire.</p>
+        <a class="btn btn-stripe" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank">Aller sur Stripe →</a>
       </div>
 
       <div class="card">
         <h3>PayPal</h3>
-        <p class="muted">Don rapide via PayPal.</p>
-        <p><a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener">Ouvrir PayPal →</a></p>
+        <p>Don rapide via PayPal.</p>
+        <a class="btn btn-paypal" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank">Ouvrir PayPal →</a>
       </div>
 
       <div class="card">
         <h3>Code créateur Epic</h3>
-        <p class="muted">Tu peux aussi me soutenir en utilisant mon <strong>code créateur Epic</strong> dans la boutique Fortnite :</p>
-        <div class="copywrap">
-          <img class="epic-icon" src="https://upload.wikimedia.org/wikipedia/commons/3/31/Epic_Games_logo.svg" alt="Epic Games" />
-          <span style="font-size:22px; font-weight:800; letter-spacing:2px;" id="creator-code">VOLARY</span>
-          <button class="copybtn" onclick="copyCreatorCode()">📋 Copier</button>
-        </div>
+        <p>Tu peux aussi me soutenir en utilisant mon <b>code créateur Epic</b> :</p>
+        <p>⭐ <b>VOLARY</b> <button class="copy-btn" onclick="copyCode()">📋 Copier</button></p>
       </div>
-    </section>
-
-    <section class="card" id="mentions" style="margin-top:28px">
-      <h3>Mentions légales</h3>
-      <p>
-        <strong>Éditeur :</strong> Volary — Micro-entrepreneur<br>
-        <strong>SIRET :</strong> <em>à compléter dès réception</em><br>
-        <strong>E-mail :</strong> <a href="mailto:ferrarioalexis0@gmail.com">ferrarioalexis0@gmail.com</a><br>
-        <strong>Adresse :</strong> <em>adresse communiquée sur demande</em><br>
-        <strong>Directeur de la publication :</strong> Volary<br>
-        <strong>Hébergeur :</strong> GitHub Pages, San Francisco, USA
-      </p>
-      <p class="legal">Les contributions perçues sont des recettes professionnelles déclarées (micro-BNC). Aucun avantage fiscal pour le donateur.</p>
-    </section>
-
-    <footer>
-      <div class="muted">© 2025 Volary — Merci pour votre soutien 💜</div>
-    </footer>
+    </div>
   </main>
 
-  <!-- Toast -->
-  <div id="toast" class="toast" role="status" aria-live="polite">Code copié !</div>
+  <footer id="mentions">
+    <p><b>Mentions légales</b></p>
+    <p>Éditeur : Volary — Micro-entrepreneur</p>
+    <p>SIRET : <i>à compléter dès réception</i></p>
+    <p>E-mail : ferrarioalexis0@gmail.com</p>
+    <p>Adresse : <i>adresse communiquée sur demande</i></p>
+    <p>Directeur de la publication : Volary</p>
+    <p>Hébergeur : GitHub Pages, San Francisco, USA</p>
+    <p style="margin-top:10px;font-size:0.8rem;">Les contributions perçues sont des recettes professionnelles déclarées (micro-BNC). Aucun avantage fiscal pour le donateur.</p>
+    <p style="margin-top:20px;">© 2025 Volary — Merci pour votre soutien 💜</p>
+  </footer>
+
+  <div class="copy-alert" id="copyAlert">Code copié ✅</div>
 
   <script>
-    // Burger menu
-    const burger = document.querySelector('.burger');
-    const drawer = document.getElementById('drawer');
-    if(burger && drawer){
-      burger.addEventListener('click', () => {
-        const open = drawer.classList.toggle('open');
-        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    function copyCode() {
+      navigator.clipboard.writeText("VOLARY").then(() => {
+        let alertBox = document.getElementById("copyAlert");
+        alertBox.classList.add("show");
+        setTimeout(() => {
+          alertBox.classList.remove("show");
+        }, 2000);
       });
-      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-        drawer.classList.remove('open');
-        burger.setAttribute('aria-expanded','false');
-      }));
-    }
-
-    // Copier code créateur + toast
-    async function copyCreatorCode(){
-      const code = 'VOLARY';
-      try{
-        if(navigator.clipboard && navigator.clipboard.writeText){
-          await navigator.clipboard.writeText(code);
-        }else{
-          const tmp = document.createElement('textarea');
-          tmp.value = code; document.body.appendChild(tmp);
-          tmp.select(); document.execCommand('copy'); tmp.remove();
-        }
-        showToast('Code copié !');
-      }catch(e){
-        showToast('Impossible de copier, essaye manuellement.');
-      }
-    }
-
-    let toastTimer;
-    function showToast(message){
-      const t = document.getElementById('toast');
-      if(!t) return;
-      t.textContent = message;
-      t.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
     }
   </script>
 </body>
