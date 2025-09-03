@@ -1,67 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Soutien à Volary</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volary — Soutenir le contenu</title>
+  <meta name="description" content="Soutiens mes lives Fortnite et mes vidéos. Dons sécurisés par carte (Stripe) ou PayPal.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #0f0f0f;
-      color: #ffffff;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 20px;
-    }
-    p {
-      font-size: 1.2em;
-      margin-bottom: 40px;
-    }
-    .don-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      align-items: center;
-    }
-    .btn {
-      display: inline-block;
-      padding: 15px 30px;
-      font-size: 1.1em;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-      color: white;
-      transition: transform 0.2s ease;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-    }
-    .paypal {
-      background-color: #0070ba;
-    }
-    .stripe {
-      background-color: #635bff;
-    }
+    :root{ --bg:#0b0f17; --card:#111827; --muted:#9aa4b2; --text:#e5e7eb; --brand:#7c3aed; --brand-2:#22d3ee; }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,ui-sans-serif; background: radial-gradient(1200px 800px at 10% -10%, rgba(124,58,237,.25), transparent 60%), radial-gradient(1200px 800px at 110% 0%, rgba(34,211,238,.2), transparent 60%), var(--bg); color:var(--text); line-height:1.6}
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1000px; margin:0 auto; padding:24px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:24px 0}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:40px; height:40px; border-radius:12px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); display:grid; place-items:center; font-weight:700}
+    .logo svg{filter:drop-shadow(0 2px 8px rgba(0,0,0,.3))}
+    nav a{opacity:.9; padding:8px 12px; border-radius:10px}
+    nav a:hover{background:rgba(255,255,255,.06)}
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center; padding:32px 0}
+    .h1{font-size: clamp(28px, 4vw, 44px); line-height:1.15; font-weight:800}
+    .muted{color:var(--muted)}
+    .card{background:rgba(17,24,39,.7); border:1px solid rgba(255,255,255,.06); box-shadow:0 10px 30px rgba(0,0,0,.25); border-radius:18px; padding:22px}
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 16px; border-radius:12px; font-weight:700; border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.06); transition:.2s}
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.1)}
+    .btn.primary{background:linear-gradient(135deg, var(--brand), var(--brand-2)); border:none}
+    .grid{display:grid; gap:18px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .pill{padding:8px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); font-size:14px}
+    footer{margin:40px 0 24px; font-size:14px}
+    .legal{font-size:13px; color:var(--muted)}
+    @media (max-width:900px){ .hero{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
-  <h1>💜 Soutiens Volary</h1>
-  <p>Chaque don m’aide à continuer mes lives TikTok et à faire évoluer le projet. Merci infiniment 🙏</p>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path d="M3 12c0-4.97 4.03-9 9-9 2.39 0 4.57.94 6.19 2.47l-2.12 2.12A6.98 6.98 0 0 0 12 5c-3.87 0-7 3.13-7 7s3.13 7 7 7c1.93 0 3.68-.79 4.95-2.05l2.12 2.12A8.96 8.96 0 0 1 12 21c-4.97 0-9-4.03-9-9Zm9-5a5 5 0 0 1 5 5h-3l4 4 4-4h-3a7 7 0 1 0-7 7v-2a5 5 0 1 1 0-10Z"/></svg>
+        </div>
+        <strong>Volary</strong>
+        <span class="pill">Soutiens le contenu</span>
+      </div>
+      <nav>
+        <a href="#soutenir">Soutenir</a>
+        <a href="#faq">FAQ</a>
+        <a href="#mentions">Mentions légales</a>
+      </nav>
+    </header>
 
-  <div class="don-buttons">
-    <!-- Bouton PayPal -->
-    <a href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" class="btn paypal" target="_blank">
-      Don via PayPal
-    </a>
+    <section class="hero">
+      <div>
+        <h1 class="h1">Soutiens mes lives <span class="muted">Fortnite</span> & mes vidéos</h1>
+        <p class="muted">Chaque contribution m’aide à financer le matériel, le montage et à proposer plus de contenu gratuit. Merci pour votre soutien 🙏</p>
+        <div class="cta">
+          <a class="btn primary" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">💳 Don par carte (Stripe)</a>
+          <a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener">🅿️ Don via PayPal</a>
+        </div>
+        <p class="muted" style="margin-top:10px">Pas de frais cachés côté créateur, paiement 100% sécurisé via les plateformes.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 8px 0">Montant rapide</h3>
+        <p class="muted" style="font-size:14px; margin-top:0">Choisissez un montant sur la page Stripe/PayPal (montant libre). Les boutons ci‑dessous renvoient vers le même lien.</p>
+        <p>
+          <a class="btn" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">2 €</a>
+          <a class="btn" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">5 €</a>
+          <a class="btn" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">10 €</a>
+          <a class="btn" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">20 €</a>
+        </p>
+        <p class="muted" style="margin-top:10px; font-size:14px">Les dons sont des <strong>contributions volontaires</strong> au créateur (non déductibles des impôts). Un reçu de paiement de la plateforme sera fourni.</p>
+      </div>
+    </section>
 
-    <!-- Bouton Stripe -->
-    <a href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" class="btn stripe" target="_blank">
-      Don par Carte Bancaire
-    </a>
+    <section id="soutenir" class="grid grid-3">
+      <div class="card">
+        <h3>Carte bancaire (Stripe)</h3>
+        <p class="muted">Ouvre une page de paiement Stripe avec montant libre.</p>
+        <p><a class="btn primary" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">Aller sur Stripe →</a></p>
+      </div>
+      <div class="card">
+        <h3>PayPal</h3>
+        <p class="muted">Don rapide via PayPal.</p>
+        <p><a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener">Ouvrir PayPal →</a></p>
+      </div>
+      <div class="card">
+        <h3>Contact</h3>
+        <p class="muted">Besoin d’un reçu ou d’une autre méthode ?</p>
+        <p><a class="btn" href="mailto:ferrarioalexis0@gmail.com">✉️ Me contacter</a></p>
+      </div>
+    </section>
+
+    <section class="grid grid-2" style="margin-top:28px">
+      <div class="card">
+        <h3>Objectif du mois</h3>
+        <p class="muted">Objectif mensuel : <strong>200 €</strong> — Collecté : <strong>0 €</strong></p>
+        <div style="background:rgba(255,255,255,.08); border-radius:12px; overflow:hidden; height:14px;">
+          <div style="height:14px; width:0%; background:linear-gradient(90deg, var(--brand), var(--brand-2));"></div>
+        </div>
+        <p class="muted" style="font-size:13px; margin-top:8px">Met à jour ces chiffres en éditant le texte (aucun script nécessaire).</p>
+      </div>
+      <div class="card">
+        <h3>Derniers soutiens</h3>
+        <ul class="muted" style="margin:0; padding-left:18px">
+          <li>—</li>
+        </ul>
+        <p class="muted" style="font-size:13px">Ajoute ici des prénoms/initiales si tu veux remercier (manuel).</p>
+      </div>
+    </section>
+
+    <section class="card" id="mentions" style="margin-top:28px">
+      <h3>Mentions légales</h3>
+      <p>
+        <strong>Éditeur :</strong> Ferrario Alexis Maurice Christian — Micro‑entrepreneur<br>
+        <strong>SIRET :</strong> <em>à compléter dès réception</em><br>
+        <strong>E‑mail :</strong> <a href="mailto:ferrarioalexis0@gmail.com">ferrarioalexis0@gmail.com</a><br>
+        <strong>Adresse :</strong> <em>domiciliation ou adresse professionnelle</em><br>
+        <strong>Directeur de la publication :</strong> Ferrario Alexis Maurice Christian<br>
+        <strong>Hébergeur :</strong> <em>à compléter (ex. OVHcloud, 2 rue Kellermann 59100 Roubaix, France — tél. 1007)</em>
+      </p>
+      <p class="legal">Les contributions perçues sont des recettes professionnelles déclarées (micro‑BNC). Aucun avantage fiscal pour le donateur.</p>
+    </section>
+
+    <footer>
+      <div class="muted">© 2025 Volary — Merci pour votre soutien 💜</div>
+    </footer>
   </div>
 </body>
 </html>
