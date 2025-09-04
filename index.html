@@ -1,251 +1,301 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="fr" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volary.fr — Soutenir</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>volary.fr – Soutenir les lives & créations</title>
+  <meta name="description" content="Micro-entreprise Alexis Ferrario – Volary. Soutenez mes lives TikTok et créations de contenu. Paiements 100% sécurisés via Stripe & PayPal." />
+  <meta name="color-scheme" content="dark light" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="volary.fr – Soutenir les lives & créations">
+  <meta property="og:description" content="Soutiens mes lives TikTok et créations de contenu. Paiements 100% sécurisés via Stripe & PayPal.">
+  <meta property="og:image" content="https://volary.fr/preview.png">
+  <meta property="og:url" content="https://volary.fr">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="volary.fr – Soutenir les lives & créations">
+  <meta name="twitter:description" content="Soutiens mes lives TikTok et créations de contenu. Paiements 100% sécurisés via Stripe & PayPal.">
+  <meta name="twitter:image" content="https://volary.fr/preview.png">
+
   <style>
+    /* ==== Variables ==== */
     :root {
-      --bg-dark: #0f172a;
-      --bg-light: #f9fafb;
-      --text-dark: #f9fafb;
-      --text-light: #0f172a;
-      --card-dark: #1e293b;
-      --card-light: #ffffff;
-      --accent: linear-gradient(90deg, #6366f1, #06b6d4);
+      --bg:#0b0c10; --bg-soft:#111318; --text:#e7e9ee; --muted:#aeb6c2;
+      --brand:#7c5cff; --brand-2:#19c6ff; --card:#12141b; --border:#232838;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:20px; --radius-lg:26px; --radius-full:999px;
+      --trans-fast:.18s cubic-bezier(.2,.8,.2,1); --trans-slow:.7s cubic-bezier(.2,.8,.2,1);
+      --ring:0 0 0 3px rgba(124,92,255,.28);
+      --gradient:linear-gradient(135deg,var(--brand),var(--brand-2));
     }
+    html[data-theme="light"] {
+      --bg:#f4f6fa; --bg-soft:#fbfbfd; --text:#121418; --muted:#606b7b;
+      --card:#ffffff; --border:#e6e9f0; --shadow:0 10px 30px rgba(16,24,40,.05);
+      --ring:0 0 0 3px rgba(124,92,255,.16);
+    }
+    *{box-sizing:border-box}html,body{height:100%;margin:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
+      radial-gradient(1200px 800px at 80% -10%,rgba(124,92,255,.12),transparent 60%),
+      radial-gradient(1000px 600px at -10% 10%,rgba(25,198,255,.12),transparent 60%),
+      var(--bg);color:var(--text);line-height:1.6;accent-color:var(--brand);
+      scroll-behavior:smooth;transition:background-color .5s ease,color .5s ease}
+    html[data-theme="light"] body{background:
+      radial-gradient(1200px 800px at 80% -10%,rgba(124,92,255,.08),transparent 60%),
+      radial-gradient(1000px 600px at -10% 10%,rgba(25,198,255,.10),transparent 60%),
+      var(--bg)}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-dark);
-      transition: background 0.3s, color 0.3s;
-    }
+    .container{width:min(1100px,92vw);margin:0 auto}
+    a{color:inherit;text-decoration:none}
 
-    body.light {
-      background: var(--bg-light);
-      color: var(--text-light);
-    }
+    /* ==== Header ==== */
+    header{position:sticky;top:0;z-index:60;backdrop-filter:blur(8px);
+      background:color-mix(in srgb,var(--bg-soft) 82%,transparent);
+      border-bottom:1px solid var(--border)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .logo{width:32px;height:32px;display:grid;place-items:center;border-radius:12px;background:var(--gradient);box-shadow:var(--shadow)}
+    .nav-links{display:flex;gap:8px;align-items:center}
+    .nav-btn{padding:8px 12px;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-soft);font-size:.9rem}
+    .nav-btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--brand) 60%,var(--border));box-shadow:var(--ring)}
+    .toggle{padding:6px 10px;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-soft);cursor:pointer}
+    .burger{display:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--bg-soft)}
+    .burger svg{width:22px;height:22px}
+    @media(max-width:720px){.nav-links{display:none}.burger{display:inline-flex}}
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+    /* ==== Mobile Menu ==== */
+    #mobileMenu{position:fixed;inset:0;display:none;z-index:80}
+    #mobileMenu.open{display:block}
+    #mobileMenu .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+    #mobileMenu .panel{position:absolute;right:0;top:0;height:100%;width:min(86vw,360px);background:var(--bg-soft);border-left:1px solid var(--border);box-shadow:var(--shadow);transform:translateX(100%);transition:transform var(--trans-fast);display:flex;flex-direction:column}
+    #mobileMenu.open .panel{transform:translateX(0)}
+    .m-row{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .m-links{display:grid;gap:10px;padding:10px 16px}
+    .m-link{padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-full);background:var(--card);text-align:center}
+    html[data-theme="light"] .m-link#themeToggleM{background:var(--bg-soft);border:1px solid var(--border)}
 
-    header h1 {
-      display: flex;
-      align-items: center;
-      font-size: 20px;
-    }
+    /* ==== Hero ==== */
+    .hero{padding:40px 0 24px;text-align:center}
+    .hero h1{font-size:clamp(24px,6vw,38px);margin:0 0 10px}
+    .hero p{color:var(--muted);margin:0 auto 20px;max-width:700px;padding:0 10px}
+    .cta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:18px auto 10px}
+    .cta{border-radius:var(--radius-full);padding:14px 16px;font-weight:700;text-align:center;border:1px solid var(--border);background:var(--bg-soft);box-shadow:var(--shadow)}
+    .cta:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--brand) 50%,var(--border));box-shadow:var(--ring)}
+    .cta .sub{display:block;font-weight:500;color:var(--muted);font-size:.9rem}
+    .secure{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:.9rem;margin:12px 0 24px}
+    .chip{padding:4px 10px;border:1px dashed var(--border);border-radius:var(--radius-full)}
 
-    header h1::before {
-      content: "⚡";
-      margin-right: 8px;
-    }
+    /* ==== Grid / Cards ==== */
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+    .card{position:relative;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--border);padding:18px;box-shadow:var(--shadow)}
+    .card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--brand) 55%,var(--border));box-shadow:0 0 20px rgba(124,92,255,.15),var(--shadow)}
+    .card h3{margin:0 0 6px;font-size:1.2rem}
+    .card p{margin:6px 0 14px;color:var(--muted);font-size:.95rem}
+    .card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;background:
+      radial-gradient(200px 200px at var(--mx,50%) var(--my,0%),rgba(124,92,255,.35),transparent 40%),
+      radial-gradient(400px 300px at var(--mx,50%) var(--my,50%),rgba(25,198,255,.25),transparent 50%);
+      opacity:0;transition:opacity var(--trans-fast)}
+    .card:hover::after{opacity:1}
+    .c3{grid-column:span 4}.c6{grid-column:span 6}.c12{grid-column:span 12}
+    @media(max-width:900px){.c3,.c6,.c12{grid-column:span 12}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-soft);font-weight:700;cursor:pointer;font-size:.95rem}
+    .btn.primary{background:var(--gradient);color:#fff;border:none}
+    .btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--brand) 60%,var(--border));box-shadow:var(--ring)}
 
-    nav a {
-      margin: 0 12px;
-      text-decoration: none;
-      color: inherit;
-      font-weight: bold;
-    }
+    /* ==== FAQ ==== */
+    .faq-q{width:100%;padding:14px 0;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:0;color:var(--text);appearance:none;opacity:1}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height var(--trans-slow);color:var(--muted)}
+    .faq-item{border-bottom:1px solid var(--border)}
+    .faq-item.open .faq-a{max-height:300px}
+    .chev{display:inline-block;transition:transform .3s ease}
+    .faq-item.open .chev{transform:rotate(180deg)}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
-      text-align: center;
-    }
+    /* ==== Form ==== */
+    .form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:600px){.form{grid-template-columns:1fr}}
+    .form .row{display:flex;flex-direction:column;gap:6px}
+    .form input,.form textarea{padding:12px;border-radius:14px;border:1px solid var(--border);background:var(--bg-soft);color:var(--text);width:100%}
+    .form input::placeholder,.form textarea::placeholder{color:var(--muted)}
+    .form input:focus,.form textarea:focus{outline:none;box-shadow:var(--ring);border-color:color-mix(in srgb,var(--brand) 55%,var(--border))}
+    .form textarea{min-height:140px}
 
-    .btn {
-      display: inline-block;
-      margin: 8px;
-      padding: 12px 22px;
-      border-radius: 30px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      background: var(--accent);
-      color: white;
-      transition: transform 0.2s, opacity 0.3s;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-      margin-top: 30px;
-    }
-
-    .card {
-      background: var(--card-dark);
-      padding: 25px;
-      border-radius: 15px;
-      width: 300px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
-    }
-
-    body.light .card {
-      background: var(--card-light);
-    }
-
-    .copy-btn {
-      margin-top: 10px;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #475569;
-      color: white;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .copy-btn:hover {
-      background: #334155;
-    }
-
-    .popup {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #22c55e;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 10px;
-      display: none;
-      animation: fadeInOut 3s forwards;
-    }
-
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(20px); }
-      10% { opacity: 1; transform: translateY(0); }
-      90% { opacity: 1; }
-      100% { opacity: 0; transform: translateY(20px); }
-    }
-
-    footer {
-      margin-top: 40px;
-      padding: 20px;
-      text-align: center;
-      font-size: 14px;
-      background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
-    }
-
-    footer a {
-      color: inherit;
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      .cards {
-        flex-direction: column;
-        align-items: center;
-      }
-      .card {
-        width: 90%;
-      }
-    }
+    /* ==== Footer / Toast / Top ==== */
+    footer{margin-top:40px;padding:22px 0 70px;border-top:1px solid var(--border);text-align:center}
+    .toast{position:fixed;right:16px;bottom:16px;background:var(--bg-soft);border:1px solid var(--border);box-shadow:var(--shadow);padding:12px 14px;border-radius:14px;opacity:0;transform:translateY(8px);transition:all .2s ease;z-index:90}
+    .toast.show{opacity:1;transform:translateY(0)}
+    #toTop{position:fixed;right:18px;bottom:78px;display:none;z-index:95;border:1px solid var(--border);border-radius:999px;padding:10px 14px;background:var(--bg-soft);box-shadow:var(--shadow);cursor:pointer}
+    #toTop:hover{transform:translateY(-2px);box-shadow:var(--ring)}
+    #toTop svg{width:20px;height:20px}
+    section{scroll-margin-top:80px}
+    #contact,#mentions,#soutenir{scroll-margin-top:90px}
   </style>
 </head>
 <body>
   <header>
-    <h1>Volary.fr</h1>
-    <nav>
-      <a href="#soutenir">Soutenir</a>
-      <a href="#contact">Contact</a>
-      <a href="#legal">Mentions légales</a>
-      <button onclick="toggleTheme()">🌗</button>
-    </nav>
+    <div class="container topbar">
+      <div class="brand"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6c3.5 1.4 6.5 4.8 9 10 2.5-5.2 5.5-8.6 9-10-3 .2-6 1.2-9 3-3-1.8-6-2.8-9-3Z" fill="white"/></svg></span><span>volary.fr</span></div>
+      <nav class="nav-links"><a class="nav-btn" href="#soutenir">Soutenir</a><a class="nav-btn" href="#contact">Contact</a><a class="nav-btn" href="#mentions">Mentions légales</a><button id="themeToggle" class="toggle"><span id="themeIcon">🌙</span></button></nav>
+      <button id="burgerBtn" class="burger"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
   </header>
 
-  <section class="container" id="soutenir">
-    <h2>Soutiens mes lives & vidéos</h2>
-    <p>Chaque don m’aide à financer le matériel, le montage et à proposer plus de contenu gratuit 🙏</p>
-    <a class="btn" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank">Don par Stripe</a>
-    <a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank">Don via PayPal</a>
-    <a class="btn" href="https://www.tiktok.com/@volary2.0" target="_blank">Me suivre sur TikTok</a>
-    <p>Paiement 100% sécurisé via Stripe/PayPal</p>
-
-    <div class="cards">
-      <div class="card">
-        <h3>Carte bancaire (Stripe)</h3>
-        <p>Montant libre, sans compte nécessaire.</p>
-        <a class="btn" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank">Aller sur Stripe →</a>
-      </div>
-      <div class="card">
-        <h3>PayPal</h3>
-        <p>Montant libre, sans compte nécessaire.</p>
-        <a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank">Ouvrir PayPal →</a>
-      </div>
-      <div class="card">
-        <h3>Code créateur Epic</h3>
-        <p>Utilise mon code créateur <b>VOLARY</b> sur Fortnite 💜</p>
-        <button class="copy-btn" onclick="copyCode()">Copier le code</button>
+  <!-- Mobile menu -->
+  <div id="mobileMenu">
+    <div class="backdrop" data-close></div>
+    <div class="panel">
+      <div class="m-row"><strong>Menu</strong><button class="burger" data-close><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+      <div class="m-links">
+        <a class="m-link" href="#soutenir" data-close-lk>Soutenir</a>
+        <a class="m-link" href="#contact" data-close-lk>Contact</a>
+        <a class="m-link" href="#mentions" data-close-lk>Mentions légales</a>
+        <button id="themeToggleM" class="m-link">Basculer clair/sombre</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="container" id="contact">
-    <h2>Contact</h2>
-    <form action="https://formsubmit.co/contact@volary.fr" method="POST" class="card" style="margin:auto;max-width:500px;">
-      <input type="text" name="pseudo" placeholder="Ton pseudo" required style="width:90%;margin:8px;padding:10px;border-radius:8px;border:none;">
-      <input type="email" name="email" placeholder="Ton e-mail" required style="width:90%;margin:8px;padding:10px;border-radius:8px;border:none;">
-      <input type="text" name="sujet" placeholder="Sujet" required style="width:90%;margin:8px;padding:10px;border-radius:8px;border:none;">
-      <textarea name="message" placeholder="Ton message..." required style="width:90%;margin:8px;padding:10px;border-radius:8px;border:none;height:100px;"></textarea>
-      <button type="submit" class="btn">Envoyer</button>
-    </form>
-  </section>
+  <!-- Hero -->
+  <main class="container">
+    <section class="hero">
+      <h1>Soutenir mes lives & créations ✨</h1>
+      <p>Chaque contribution aide à financer le matériel, les logiciels, les déplacements et le temps de création — <strong>merci d’avance pour votre soutien</strong> 💜</p>
+      <div class="cta-row">
+        <a class="cta" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener noreferrer">Payer par carte (Stripe)<span class="sub">Montant libre, sans compte</span></a>
+        <a class="cta" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener noreferrer">Faire un don (PayPal)<span class="sub">Montant libre, sans compte</span></a>
+        <a class="cta" href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener noreferrer">Ma page TikTok<span class="sub">@volary2.0</span></a>
+      </div>
+      <div class="secure"><span class="chip">🔒 Paiements 100% sécurisés via Stripe & PayPal</span></div>
+    </section>
 
-  <footer id="legal">
-    <div>
-      <strong>Mentions légales</strong> · Éditeur : Volary — Micro-entrepreneur · 
-      SIRET : à compléter dès réception · 
-      E-mail : <a href="mailto:contact@volary.fr">contact@volary.fr</a> · 
-      Adresse : communiquée sur demande · 
-      Directeur de la publication : Volary · 
-      Hébergeur : GitHub Pages, San Francisco, USA
+    <!-- Blocs -->
+    <section id="soutenir" class="grid">
+      <article class="card c3"><h3>💳 Paiement par carte (Stripe)</h3><p>Montant libre, aucun compte nécessaire.</p><a class="btn primary" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener noreferrer">Soutenir via Stripe</a></article>
+      <article class="card c3"><h3>🟡 Don via PayPal</h3><p>Montant libre, pas de compte nécessaire.</p><a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener noreferrer">Soutenir via PayPal</a></article>
+      <article class="card c3"><h3>🪄 Code créateur : <code id="creatorCode">volary</code></h3><p>Utilise ce code lors de tes achats.</p><button class="btn" id="copyCodeBtn" type="button">Copier le code</button></article>
+      <article class="card c3"><h3>🎵 Suivre sur TikTok</h3><p>Rejoins mes lives et créations.</p><a class="btn" href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener noreferrer">Aller sur TikTok</a></article>
+
+      <article class="card c6">
+        <h3>❓ Questions fréquentes</h3>
+        <div class="faq">
+          <div class="faq-item"><button class="faq-q" type="button">À quoi servent les dons ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Ils financent le matériel (caméra, micro, éclairage), les logiciels, les abonnements, les déplacements et le temps de création.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Le montant est-il libre ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Oui, vous choisissez librement le montant (hors seuils techniques des plateformes).</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Faut-il créer un compte ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Non, paiement par carte via Stripe ou en invité sur PayPal.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Les paiements sont-ils sécurisés ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Oui, Stripe et PayPal respectent les normes bancaires et de chiffrement (TLS). Les données de carte ne passent pas par ce site.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Puis-je obtenir un reçu ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Oui, un reçu est généré automatiquement par la plateforme utilisée.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Est-ce déductible des impôts ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Non. Les contributions sont des recettes professionnelles déclarées (micro-BNC), sans avantage fiscal pour le donateur.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Puis-je annuler/un rembourser un paiement ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Contactez-moi rapidement à <a href="mailto:contact@volary.fr">contact@volary.fr</a>. Un remboursement peut être étudié selon le statut du paiement.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Y a-t-il des cookies/traqueurs sur ce site ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Le site est minimal et sans traqueur. Les paiements se font sur Stripe/PayPal : leurs politiques s’appliquent sur leurs pages.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Les mineurs peuvent-ils faire un don ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Uniquement avec l’accord d’un représentant légal et un moyen de paiement approprié.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Autres moyens pour soutenir ? <span class="chev" aria-hidden="true">▾</span></button><div class="faq-a"><p>Follow, like, partage sur TikTok <a href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener noreferrer">@volary2.0</a> — ça aide énormément !</p></div></div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="card c12" style="margin-top:16px">
+      <h3>✉️ Me contacter</h3>
+      <p class="muted">Indique ton pseudo. Le formulaire ouvre ton client e-mail (pas de serveur côté site).</p>
+      <form id="mailForm" class="form" autocomplete="on">
+        <div class="row"><label for="pseudo">Pseudo</label><input id="pseudo" name="pseudo" required placeholder="Ton pseudo" /></div>
+        <div class="row"><label for="email">E-mail</label><input id="email" name="email" type="email" required placeholder="ton@email.fr" /></div>
+        <div class="row"><label for="subject">Sujet</label><input id="subject" name="subject" required placeholder="Sujet du message" /></div>
+        <div class="row" style="grid-column:span 2"><label for="message">Message</label><textarea id="message" name="message" required placeholder="Écris ton message…"></textarea></div>
+        <div style="grid-column:span 2;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button class="btn primary" type="submit">Envoyer</button>
+          <button class="btn" type="reset">Effacer</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="mentions">
+    <div class="container">
+      <p><strong>Mentions légales</strong> · Éditeur : Volary — Micro-entrepreneur · SIRET : à compléter dès réception · E-mail : <a href="mailto:contact@volary.fr">contact@volary.fr</a> · Hébergeur : GitHub Pages, San Francisco, USA</p>
+      <small>Les contributions perçues sont des recettes professionnelles déclarées (micro-BNC). Aucun avantage fiscal pour le donateur.</small>
+      <p style="margin-top:8px">© 2025 Volary — Merci pour votre soutien 💜</p>
     </div>
-    <div style="margin-top:6px">
-      Les contributions perçues sont des recettes professionnelles déclarées (micro-BNC). Aucun avantage fiscal pour le donateur.
-    </div>
-    <div style="margin-top:10px">© 2025 Volary — Merci pour votre soutien 💜</div>
   </footer>
 
-  <div id="popup" class="popup">Code copié !</div>
+  <!-- Toast & Back to top -->
+  <div id="toast" class="toast">✅ Code « volary » copié !</div>
+  <button id="toTop" aria-label="Haut de page" title="Remonter en haut"><svg viewBox="0 0 24 24" fill="none"><path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
 
+  <!-- JS -->
   <script>
-    function toggleTheme() {
-      document.body.classList.toggle('light');
-    }
+    // Thème
+    (function(){
+      const root=document.documentElement;
+      const saved=localStorage.getItem('theme');
+      if(saved) root.setAttribute('data-theme',saved);
+      function toggle(){
+        const next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+        root.setAttribute('data-theme',next);
+        localStorage.setItem('theme',next);
+      }
+      document.getElementById('themeToggle').onclick=toggle;
+      const tglM = document.getElementById('themeToggleM');
+      if (tglM) tglM.onclick=toggle;
+    })();
 
-    function copyCode() {
-      navigator.clipboard.writeText("VOLARY");
-      let popup = document.getElementById("popup");
-      popup.style.display = "block";
-      setTimeout(() => popup.style.display = "none", 2500);
-    }
+    // Menu mobile
+    (function(){
+      const menu=document.getElementById('mobileMenu');
+      const btn=document.getElementById('burgerBtn');
+      function close(){menu.classList.remove('open'); document.body.style.overflow='';}
+      function open(){menu.classList.add('open'); document.body.style.overflow='hidden';}
+      btn.onclick=()=>menu.classList.contains('open')?close():open();
+      menu.querySelectorAll('[data-close],[data-close-lk]').forEach(el=>el.onclick=close);
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+    })();
+
+    // FAQ
+    document.querySelectorAll('.faq-q').forEach(q=>{
+      q.addEventListener('click', ()=>{
+        const item=q.closest('.faq-item');
+        const open=item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+        if(!open) item.classList.add('open');
+      });
+    });
+
+    // Copier code
+    (function(){
+      const btn=document.getElementById('copyCodeBtn');
+      const toast=document.getElementById('toast');
+      if(!btn) return;
+      btn.onclick=async ()=>{
+        try{ await navigator.clipboard.writeText('volary'); }
+        catch{
+          const ta=document.createElement('textarea'); ta.value='volary';
+          document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');} finally{ta.remove();}
+        }
+        toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2000);
+      };
+    })();
+
+    // Form -> mailto
+    document.getElementById('mailForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const pseudo=document.getElementById('pseudo').value.trim();
+      const email=document.getElementById('email').value.trim();
+      const subject=document.getElementById('subject').value.trim();
+      const message=document.getElementById('message').value.trim();
+      const body=`Pseudo: ${pseudo}\nEmail: ${email}\n\n${message}`;
+      location.href=`mailto:contact@volary.fr?subject=${encodeURIComponent('[volary.fr] '+subject)}&body=${encodeURIComponent(body)}`;
+    });
+
+    // Back to top
+    (function(){
+      const toTop=document.getElementById('toTop');
+      function onScroll(){ toTop.style.display=window.scrollY>200?'inline-flex':'none'; }
+      window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+      toTop.addEventListener('click', ()=> scrollTo({top:0,behavior:'smooth'}));
+    })();
   </script>
 </body>
 </html>
