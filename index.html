@@ -1,242 +1,360 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volary — Soutenir le contenu</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>volary.fr — Soutenir & Contacter</title>
+  <meta name="description" content="Soutiens Volary : dons Stripe/PayPal, code créateur, FAQ et contact." />
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      line-height: 1.6;
+    /* ===================== THEMES ===================== */
+    :root{
+      --bg:#0e1422;
+      --panel:#111a2b;
+      --panel-2:#0f1728;
+      --text:#e8eef7;
+      --muted:#aab7ca;
+      --border:#1e2b44;
+      --brand1:#6d7cff; /* violet */
+      --brand2:#09d2d6; /* turquoise */
+      --shadow:0 16px 40px rgba(0,0,0,.35);
+    }
+    html[data-theme="light"]{
+      --bg:#f7fafc;
+      --panel:#ffffff;
+      --panel-2:#f2f5f9;
+      --text:#0f172a;
+      --muted:#334155;
+      --border:#d6e1f0;
+      --shadow:0 14px 30px rgba(0,0,0,.10);
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      background: #111827;
+    /* ===================== BASE ===================== */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background: radial-gradient(1400px 800px at 50% -240px, #1a2540 0%, var(--bg) 55%);
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1200px; margin:0 auto; padding:0 20px}
+
+    /* ===================== HEADER ===================== */
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(140%) blur(8px);
+      background: color-mix(in oklab, var(--bg) 84%, transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{height:64px; display:flex; align-items:center; justify-content:space-between; gap:14px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+    .logo{width:28px; height:28px; display:inline-block}
+    .logo svg{display:block}
+    nav .links{display:flex; gap:12px; align-items:center}
+    .chip{
+      padding:8px 12px; border:1px solid var(--border); border-radius:999px; font-weight:600;
+      transition:transform .2s, background .2s, box-shadow .2s;
+      background:var(--panel-2);
+    }
+    .chip:hover{transform:translateY(-1px); box-shadow:var(--shadow)}
+    .toggle{
+      margin-left:8px; padding:8px 12px; border-radius:999px; border:1px solid var(--border);
+      background:var(--panel); cursor:pointer; font-weight:700;
     }
 
-    header .logo {
-      font-weight: bold;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    /* ===================== HERO ===================== */
+    .hero{text-align:center; padding:40px 0 18px}
+    .hero h1{font-size:34px; margin:0 0 10px}
+    .hero p.lead{color:var(--muted); margin:0}
+    .cta-row{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin:22px 0 8px}
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:13px 22px; border-radius:999px; font-weight:800;
+      border:1px solid var(--border); background:var(--panel);
+      transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .pill:hover{ transform: translateY(-2px) scale(1.03); box-shadow: var(--shadow); filter:brightness(1.05) }
+    .pill.brand{ border:0; background:linear-gradient(90deg, var(--brand1), var(--brand2)); color:#0b0f16 }
+    .subnote{ color:var(--muted); font-size:.95rem }
+
+    /* ===================== GRID DES BLOCS ===================== */
+    .grid{
+      display:grid; gap:22px; margin:32px auto 18px;
+      grid-template-columns: repeat(3, 340px);     /* 3 colonnes fixes */
+      justify-content: center;                      /* centré horizontalement */
+    }
+    .card{
+      position:relative; padding:26px 24px; border-radius:16px;
+      background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), var(--panel-2));
+      border:1px solid var(--border); box-shadow:var(--shadow);
+      overflow:hidden; isolation:isolate;
+      transform: translateY(14px); opacity:0; transition: transform .35s ease, opacity .35s ease;
+      width:100%; max-width:340px; justify-self:center;
+    }
+    .card::before{
+      content:""; position:absolute; inset:-1px; border-radius:18px; pointer-events:none; z-index:0;
+      background:linear-gradient(90deg, var(--brand1), var(--brand2)) border-box;
+      mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+      -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity:.55; filter:blur(.2px);
+    }
+    .card:hover{ transform: translateY(-6px) }
+    .card:hover::before{ opacity:.85; box-shadow:0 0 24px color-mix(in srgb, var(--brand2) 60%, transparent) inset }
+    .card h3{ margin:2px 0 10px; font-size:20px }
+    .card p{ margin:0; color:var(--muted) }
+    .card .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      margin-top:16px; padding:12px 18px; border-radius:12px; font-weight:800;
+      background:linear-gradient(90deg, var(--brand1), var(--brand2)); color:#081018; border:0;
+      transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .card .btn:hover{ transform:translateY(-2px) scale(1.03); box-shadow:var(--shadow); filter:brightness(1.06) }
+
+    .card.tiktok{ aspect-ratio:1 / 1; display:flex; flex-direction:column; justify-content:center }
+    .card.faq{ grid-column: span 2; max-width:700px; width:100%; justify-self:center }
+    .card.contact{ grid-column:1 / -1; max-width:900px; width:100%; justify-self:center }
+
+    @media (max-width:1120px){
+      .grid{ grid-template-columns: repeat(2, 340px); }
+      .card.faq{ grid-column:1 / -1; max-width:700px }
+    }
+    @media (max-width:740px){
+      .grid{ grid-template-columns: 1fr; }
+      .card, .card.faq, .card.contact{ max-width:520px; justify-self:center }
     }
 
-    header nav a {
-      margin-left: 20px;
-      color: white;
-      text-decoration: none;
+    /* ===================== FAQ ===================== */
+    .faq-list{ display:flex; flex-direction:column; gap:10px; margin-top:6px }
+    .faq-item{ border:1px solid var(--border); border-radius:12px; background:var(--panel); overflow:hidden }
+    .faq-q{ width:100%; text-align:left; background:transparent; border:0; color:var(--text);
+      padding:14px 16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:space-between }
+    .faq-q .arrow{ transition: transform .2s ease }
+    .faq-a{ display:none; padding:0 16px 14px; color:var(--muted); line-height:1.55 }
+    .faq-item.open .faq-a{ display:block }
+    .faq-item.open .faq-q .arrow{ transform:rotate(90deg) }
+
+    /* ===================== CONTACT ===================== */
+    .fields{ display:grid; gap:12px; grid-template-columns: repeat(2, 1fr); margin-top:8px }
+    .fields .full{ grid-column:1 / -1 }
+    @media (max-width:680px){ .fields{ grid-template-columns:1fr } }
+    .input, textarea{
+      width:100%; background:var(--panel-2); border:1px solid var(--border); color:var(--text);
+      padding:12px 14px; border-radius:12px; outline:none;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .input:focus, textarea:focus{ border-color:var(--brand1); box-shadow:0 0 0 3px color-mix(in srgb, var(--brand1) 35%, transparent) }
+    .send{
+      margin-top:10px; width:100%; border:0; cursor:pointer;
+      padding:12px 16px; border-radius:12px; font-weight:800; color:#091016;
+      background:linear-gradient(90deg, var(--brand1), var(--brand2));
     }
 
-    header nav a:hover {
-      text-decoration: underline;
-    }
+    /* ===================== TOAST ===================== */
+    .toast{ position:fixed; right:18px; bottom:18px; z-index:60; background:var(--panel);
+      border:1px solid var(--border); color:var(--text); padding:10px 14px; border-radius:12px; box-shadow:var(--shadow);
+      opacity:0; transform: translateY(12px); pointer-events:none; transition: opacity .25s, transform .25s }
+    .toast.show{ opacity:1; transform: translateY(0); pointer-events:auto }
 
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
-
-    .btn {
-      display: inline-block;
-      margin: 10px 5px;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: all 0.25s ease-in-out;
-    }
-
-    .btn-stripe {
-      background: linear-gradient(90deg, #6366f1, #06b6d4);
-      color: white;
-    }
-
-    .btn-paypal {
-      background: #1e293b;
-      color: white;
-      border: 1px solid #475569;
-    }
-
-    .btn-tiktok {
-      background: black;
-      color: white;
-    }
-
-    /* Effet hover lumineux */
-    .btn:hover {
-      opacity: 0.95;
-      transform: translateY(-3px);
-      box-shadow: 0 0 12px rgba(124, 58, 237, 0.6), 0 0 20px rgba(6, 182, 212, 0.4);
-    }
-
-    /* ✅ Effet clic/rebond */
-    .btn:active {
-      transform: scale(0.92);
-      box-shadow: 0 0 5px rgba(0,0,0,0.4);
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 30px;
-      justify-content: center;
-    }
-
-    .card {
-      background: #111827;
-      padding: 20px;
-      border-radius: 10px;
-      flex: 1;
-      min-width: 250px;
-      text-align: center;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      min-height: 220px;
-
-      border: 1px solid #1f2937;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-      transition: all 0.3s ease-in-out;
-    }
-
-    .card:hover {
-      box-shadow: 0 0 15px rgba(99, 102, 241, 0.7), 0 0 25px rgba(6, 182, 212, 0.5);
-      transform: translateY(-5px);
-    }
-
-    footer {
-      background: #111827;
-      padding: 20px;
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.9rem;
-      border-top: 1px solid #1f2937;
-    }
-
-    .copy-btn {
-      background: #374151;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-left: 8px;
-      transition: all 0.25s ease-in-out;
-    }
-
-    .copy-btn:hover {
-      background: #4b5563;
-      transform: translateY(-2px);
-      box-shadow: 0 0 10px rgba(124, 58, 237, 0.6), 0 0 15px rgba(6, 182, 212, 0.4);
-    }
-
-    /* ✅ Effet clic sur bouton Copier */
-    .copy-btn:active {
-      transform: scale(0.9);
-    }
-
-    .copy-alert {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #10b981;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 5px;
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
-    }
-
-    .copy-alert.show {
-      opacity: 1;
-    }
+    /* ===================== FOOTER ===================== */
+    footer{ margin-top:auto; border-top:1px solid var(--border); background:var(--panel-2); color:var(--muted); font-size:.92rem }
+    footer .content{ padding:16px 20px }
   </style>
 </head>
 <body>
+  <!-- ===================== HEADER ===================== -->
   <header>
-    <div class="logo">🌌 Volary <span style="font-weight:normal;">Soutiens le contenu</span></div>
-    <nav>
-      <a href="https://www.tiktok.com/@volary2.0" target="_blank">🎵 TikTok</a>
-      <a href="#soutenir">🤝 Soutenir</a>
-      <a href="#mentions">📜 Mentions légales</a>
-    </nav>
+    <div class="container nav">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <!-- petit logo vectoriel -->
+          <svg width="28" height="28" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#6d7cff"/><stop offset="1" stop-color="#09d2d6"/>
+              </linearGradient>
+            </defs>
+            <circle cx="22" cy="22" r="20" fill="url(#g)"/>
+            <path d="M30 15l-9 14h-7l9-14h7Z" fill="#0d1220"/>
+          </svg>
+        </span>
+        volary.fr
+      </div>
+      <nav class="links">
+        <a class="chip" href="#soutenir">Soutenir</a>
+        <a class="chip" href="#contact">Contact</a>
+        <a class="chip" href="#legal">Mentions légales</a>
+        <button id="toggleTheme" class="toggle" type="button">🌙/☀️</button>
+      </nav>
+    </div>
   </header>
 
-  <main>
+  <!-- ===================== HERO ===================== -->
+  <section class="hero container" id="soutenir">
     <h1>Soutiens mes lives & mes vidéos</h1>
-    <p>Chaque contribution m’aide à financer le matériel, le montage et à proposer plus de contenu gratuit. Merci pour votre soutien 🙏</p>
+    <p class="lead">Tes contributions m’aident à financer le matériel, le montage et à proposer du contenu gratuit. Merci pour ton soutien 🙏</p>
 
-    <div>
-      <a class="btn btn-stripe" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank">💳 Don par carte (Stripe)</a>
-      <a class="btn btn-paypal" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank">💙 Don via PayPal</a>
-      <a class="btn btn-tiktok" href="https://www.tiktok.com/@volary2.0" target="_blank">🎵 Me suivre sur TikTok</a>
+    <div class="cta-row">
+      <a class="pill brand" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">💳 Don par carte (Stripe)</a>
+      <a class="pill brand" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener">💙 Don via PayPal</a>
+      <a class="pill" href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener">🎵 Me suivre sur TikTok</a>
     </div>
+    <p class="subnote">Paiement 100% sécurisé via Stripe/PayPal.</p>
+  </section>
 
-    <p>Paiement 100% sécurisé via Stripe/PayPal.</p>
-
-    <div class="cards" id="soutenir">
-      <div class="card">
+  <!-- ===================== BLOCS ===================== -->
+  <section class="container">
+    <div class="grid" id="grid">
+      <!-- Stripe -->
+      <article class="card reveal">
         <h3>Carte bancaire (Stripe)</h3>
         <p>Montant libre, sans compte nécessaire.</p>
-        <a class="btn btn-stripe" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank">Aller sur Stripe →</a>
-      </div>
+        <a class="btn" href="https://buy.stripe.com/test_7sYcMY9TVbG15iLgY6c3m00" target="_blank" rel="noopener">Aller sur Stripe →</a>
+      </article>
 
-      <div class="card">
+      <!-- PayPal -->
+      <article class="card reveal">
         <h3>PayPal</h3>
-        <p>Don rapide via PayPal.</p>
-        <a class="btn btn-paypal" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank">Ouvrir PayPal →</a>
-      </div>
+        <p>Don rapide via PayPal (montant libre, pas de compte requis).</p>
+        <a class="btn" href="https://www.paypal.com/ncp/payment/3LKHC7387PH5G" target="_blank" rel="noopener">Ouvrir PayPal →</a>
+      </article>
 
-      <div class="card">
+      <!-- Code créateur -->
+      <article class="card reveal">
         <h3>Code créateur Epic</h3>
-        <p>Tu peux aussi me soutenir en utilisant mon <b>code créateur Epic</b> :</p>
-        <p>⭐ <b>VOLARY</b> <button class="copy-btn" onclick="copyCode()">📋 Copier</button></p>
-      </div>
-    </div>
-  </main>
+        <p>Tu peux me soutenir en utilisant mon <strong>code créateur Epic</strong> dans la boutique Fortnite :</p>
+        <p style="margin-top:10px">⭐ <strong id="creatorCode">V O L A R Y</strong></p>
+        <button class="btn" id="copyBtn" type="button">📋 Copier</button>
+      </article>
 
-  <footer id="mentions">
-    <p><b>Mentions légales</b></p>
-    <p>Éditeur : Volary — Micro-entrepreneur</p>
-    <p>SIRET : <i>à compléter dès réception</i></p>
-    <p>E-mail : ferrarioalexis0@gmail.com</p>
-    <p>Adresse : <i>adresse communiquée sur demande</i></p>
-    <p>Directeur de la publication : Volary</p>
-    <p>Hébergeur : GitHub Pages, San Francisco, USA</p>
-    <p style="margin-top:10px;font-size:0.8rem;">Les contributions perçues sont des recettes professionnelles déclarées (micro-BNC). Aucun avantage fiscal pour le donateur.</p>
-    <p style="margin-top:20px;">© 2025 Volary — Merci pour votre soutien 💜</p>
+      <!-- TikTok -->
+      <article class="card tiktok reveal">
+        <h3>Mon TikTok</h3>
+        <p>Je poste des clips, des infos et des annonces de live.</p>
+        <a class="btn" href="https://www.tiktok.com/@volary2.0" target="_blank" rel="noopener">Voir TikTok →</a>
+      </article>
+
+      <!-- FAQ -->
+      <article class="card faq reveal">
+        <h3>FAQ — Questions fréquentes</h3>
+        <div class="faq-list" id="faq">
+          <!-- Généré en JS -->
+        </div>
+      </article>
+
+      <!-- Contact -->
+      <article class="card contact reveal" id="contact">
+        <h3>Contact</h3>
+        <form action="https://formsubmit.co/contact@volary.fr" method="POST">
+          <!-- options FormSubmit -->
+          <input type="hidden" name="_subject" value="Nouveau message depuis volary.fr">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+
+          <div class="fields">
+            <input class="input" type="text" name="pseudo" placeholder="Ton pseudo" required />
+            <input class="input" type="email" name="email" placeholder="Ton e-mail" required />
+            <input class="input full" type="text" name="sujet" placeholder="Sujet" />
+            <textarea class="input full" name="message" rows="5" placeholder="Ton message..." required></textarea>
+          </div>
+          <button class="send" type="submit">✉️ Envoyer</button>
+        </form>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER / MENTIONS ===================== -->
+  <footer id="legal">
+    <div class="container content">
+      <div style="margin-bottom:6px"><strong>Mentions légales</strong></div>
+      <div>
+        Éditeur : Volary — Micro-entrepreneur · SIRET : à compléter dès réception · E-mail :
+        <a href="mailto:ferrarioalexis0@gmail.com">ferrarioalexis0@gmail.com</a> · Adresse : communiquée sur demande ·
+        Directeur de la publication : Volary · Hébergeur : GitHub Pages, San Francisco, USA
+      </div>
+      <div style="margin-top:6px">
+        Les contributions perçues sont des recettes professionnelles déclarées (micro-BNC). Aucun avantage fiscal pour le donateur.
+      </div>
+      <div style="margin-top:10px">© 2025 Volary — Merci pour votre soutien 💜</div>
+    </div>
   </footer>
 
-  <div class="copy-alert" id="copyAlert">Code copié ✅</div>
+  <!-- ===================== TOAST ===================== -->
+  <div id="toast" class="toast">Code copié ✅</div>
 
+  <!-- ===================== JS ===================== -->
   <script>
-    function copyCode() {
-      navigator.clipboard.writeText("VOLARY").then(() => {
-        let alertBox = document.getElementById("copyAlert");
-        alertBox.classList.add("show");
-        setTimeout(() => {
-          alertBox.classList.remove("show");
-        }, 2000);
+    /* ------ Theme toggle ------ */
+    const html = document.documentElement;
+    const toggleTheme = document.getElementById('toggleTheme');
+    const saved = localStorage.getItem('theme');
+    if(saved){ html.setAttribute('data-theme', saved); }
+    toggleTheme.addEventListener('click', ()=>{
+      const t = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', t);
+      localStorage.setItem('theme', t);
+    });
+
+    /* ------ Appear on scroll ------ */
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.style.opacity = 1;
+          e.target.style.transform = 'translateY(0)';
+          io.unobserve(e.target);
+        }
       });
-    }
+    }, {threshold:.18});
+    revealEls.forEach(el=>io.observe(el));
+
+    /* ------ Copy creator code + toast ------ */
+    const copyBtn = document.getElementById('copyBtn');
+    const codeEl = document.getElementById('creatorCode');
+    const toast = document.getElementById('toast');
+    copyBtn.addEventListener('click', async ()=>{
+      const code = codeEl.textContent.replace(/\s+/g,''); // "VOLARY"
+      try{
+        await navigator.clipboard.writeText(code);
+        toast.textContent = 'Code "' + code + '" copié ✅';
+      }catch{
+        toast.textContent = 'Copie impossible, voici le code : ' + code;
+      }
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'), 2400);
+    });
+
+    /* ------ FAQ ------ */
+    const faqData = [
+      ['Les dons sont-ils sécurisés ?','Oui : Stripe et PayPal gèrent les paiements de façon chiffrée. Je ne vois jamais tes infos bancaires.'],
+      ['Un compte est-il nécessaire ?','Non, tu peux payer par carte ou via PayPal sans créer de compte.'],
+      ['Puis-je choisir le montant ?','Bien sûr, le montant est libre.'],
+      ['À quoi servent les dons ?','À financer le matériel, l’hébergement, et le temps de production/édition.'],
+      ['Puis-je avoir une facture ?','Je peux fournir une attestation sur simple demande par e-mail.'],
+      ['Mon code créateur, ça change quoi ?','Epic me reverse un petit pourcentage sans coût supplémentaire pour toi.'],
+      ['Je peux annuler un don ?','Contacte directement Stripe/PayPal ou écris-moi : on voit ça ensemble.'],
+      ['Quand a lieu le prochain live ?','Je l’annonce sur TikTok — suis-moi pour être notifié !'],
+      ['Puis-je proposer une idée de vidéo ?','Oui, envoie-moi un message via le formulaire de contact.'],
+      ['Comment te contacter autrement ?','Tu peux m’écrire à contact@volary.fr.']
+    ];
+    const faqWrap = document.getElementById('faq');
+    faqData.forEach(([q,a])=>{
+      const item = document.createElement('div');
+      item.className = 'faq-item';
+      item.innerHTML = `
+        <button class="faq-q" type="button">
+          <span>${q}</span>
+          <span class="arrow">▶</span>
+        </button>
+        <div class="faq-a">${a}</div>
+      `;
+      item.querySelector('.faq-q').addEventListener('click',()=>{
+        item.classList.toggle('open');
+      });
+      faqWrap.appendChild(item);
+    });
   </script>
 </body>
 </html>
