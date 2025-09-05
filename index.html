@@ -70,7 +70,6 @@
     .m-row{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
     .m-links{display:grid;gap:10px;padding:10px 16px}
     .m-link{padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-full);background:var(--card);text-align:center}
-    .m-link:hover,.m-link:focus{border-color:var(--brand);box-shadow:var(--ring)}
 
     /* ==== Hero ==== */
     .hero{padding:40px 0 24px;text-align:center}
@@ -91,9 +90,52 @@
     .card p{margin:6px 0 14px;color:var(--muted);font-size:.95rem}
     .c3{grid-column:span 4}.c6{grid-column:span 6}.c12{grid-column:span 12}
     @media(max-width:900px){.c3,.c6,.c12{grid-column:span 12}}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-soft);font-weight:700;cursor:pointer;font-size:.95rem}
+
+    /* ==== BOUTONS : base ==== */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-soft);font-weight:700;cursor:pointer;font-size:.95rem;color:var(--text)}
     .btn.primary{background:var(--gradient);color:#fff;border:none}
     .btn:hover,.btn:focus{transform:translateY(-1px);border-color:var(--brand);box-shadow:var(--ring)}
+    .cta,.nav-btn,.m-link,.toggle,.burger{color:var(--text)}
+
+    /* ==== VISIBILITÉ ACCRUE EN MODE CLAIR (PC & MOBILE) ==== */
+    html[data-theme="light"] .btn,
+    html[data-theme="light"] .cta,
+    html[data-theme="light"] .nav-btn,
+    html[data-theme="light"] .m-link,
+    html[data-theme="light"] .toggle,
+    html[data-theme="light"] .burger{
+      background:#ffffff;             /* fond blanc franc */
+      color:#0f172a;                  /* texte foncé */
+      border-color:#b9c4d9;           /* bordure plus marquée */
+      box-shadow:0 6px 18px rgba(16,24,40,.06);
+    }
+    html[data-theme="light"] .btn.primary,
+    html[data-theme="light"] .cta.primary{ color:#fff; border:none; }
+    html[data-theme="light"] .btn:hover,
+    html[data-theme="light"] .btn:focus,
+    html[data-theme="light"] .cta:hover,
+    html[data-theme="light"] .cta:focus,
+    html[data-theme="light"] .nav-btn:hover,
+    html[data-theme="light"] .nav-btn:focus,
+    html[data-theme="light"] .m-link:hover,
+    html[data-theme="light"] .m-link:focus,
+    html[data-theme="light"] .toggle:hover,
+    html[data-theme="light"] .toggle:focus,
+    html[data-theme="light"] .burger:hover,
+    html[data-theme="light"] .burger:focus{
+      border-color:var(--brand);
+      box-shadow:var(--ring), 0 6px 18px rgba(16,24,40,.08);
+      transform:translateY(-1px);
+    }
+    /* Bouton désactivé (ex. « Effacer ») lisible */
+    .btn:disabled{
+      background:#eef2f8;
+      color:#8b96a8;
+      border-color:#d7deea;
+      box-shadow:none;
+      cursor:not-allowed;
+      transform:none;
+    }
 
     /* ==== FAQ ==== */
     .faq-q{width:100%;padding:14px 0;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:0;color:var(--text)}
@@ -111,6 +153,7 @@
     .form input::placeholder,.form textarea::placeholder{color:var(--muted)}
     .form input:focus,.form textarea:focus{outline:none;box-shadow:var(--ring);border-color:var(--brand)}
     .form textarea{min-height:140px}
+    .form label{font-weight:600}
 
     /* ==== Footer / Toast / Top ==== */
     footer{margin-top:40px;padding:22px 0 70px;border-top:1px solid var(--border);text-align:center}
@@ -214,55 +257,16 @@
       <article class="card c6">
         <h3>❓ Questions fréquentes</h3>
         <div class="faq">
-          <div class="faq-item">
-            <button class="faq-q" type="button">À quoi servent les dons ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Ils financent le matériel, les logiciels, les abonnements, les déplacements et le temps de création pour améliorer la qualité des lives et des vidéos.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Le montant est-il libre ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Oui, tu choisis le montant librement — même de très petits montants aident.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Faut-il créer un compte ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Non. Stripe accepte la carte sans compte. PayPal permet aussi de payer en invité.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Les paiements sont-ils sécurisés ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Oui, Stripe et PayPal respectent les normes bancaires (TLS/PCI DSS). Les informations de carte ne transitent pas par ce site.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Puis-je obtenir un reçu ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Oui, la plateforme t’envoie automatiquement un e-mail de confirmation avec le reçu.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Est-ce déductible des impôts ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Non. Les contributions sont des recettes professionnelles (micro-BNC) et ne donnent pas droit à une réduction d’impôt.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Puis-je annuler un paiement ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Contacte-moi rapidement à <a href="mailto:contact@volary.fr">contact@volary.fr</a>. Je verrai avec la plateforme ce qui est possible.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Vous gardez des cookies ou traqueurs ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Le site n’embarque pas de traqueur. Pour les paiements, les politiques de Stripe/PayPal s’appliquent.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Les mineurs peuvent donner ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Uniquement avec l’accord d’un représentant légal. Merci de demander avant de contribuer.</p></div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">Comment vous contacter autrement ? <span class="chev">▾</span></button>
-            <div class="faq-a"><p>Par e-mail : <a href="mailto:contact@volary.fr">contact@volary.fr</a> — ou via le formulaire ci-dessous.</p></div>
-          </div>
+          <div class="faq-item"><button class="faq-q" type="button">À quoi servent les dons ? <span class="chev">▾</span></button><div class="faq-a"><p>Ils financent le matériel, les logiciels, les abonnements, les déplacements et le temps de création pour améliorer la qualité des lives et des vidéos.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Le montant est-il libre ? <span class="chev">▾</span></button><div class="faq-a"><p>Oui, tu choisis le montant librement — même de très petits montants aident.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Faut-il créer un compte ? <span class="chev">▾</span></button><div class="faq-a"><p>Non. Stripe accepte la carte sans compte. PayPal permet aussi de payer en invité.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Les paiements sont-ils sécurisés ? <span class="chev">▾</span></button><div class="faq-a"><p>Oui, Stripe et PayPal respectent les normes bancaires (TLS/PCI DSS). Les informations de carte ne transitent pas par ce site.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Puis-je obtenir un reçu ? <span class="chev">▾</span></button><div class="faq-a"><p>Oui, la plateforme t’envoie automatiquement un e-mail de confirmation avec le reçu.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Est-ce déductible des impôts ? <span class="chev">▾</span></button><div class="faq-a"><p>Non. Les contributions sont des recettes professionnelles (micro-BNC) et ne donnent pas droit à une réduction d’impôt.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Puis-je annuler un paiement ? <span class="chev">▾</span></button><div class="faq-a"><p>Contacte-moi rapidement à <a href="mailto:contact@volary.fr">contact@volary.fr</a>. Je verrai avec la plateforme ce qui est possible.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Vous gardez des cookies ou traqueurs ? <span class="chev">▾</span></button><div class="faq-a"><p>Le site n’embarque pas de traqueur. Pour les paiements, les politiques de Stripe/PayPal s’appliquent.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Les mineurs peuvent donner ? <span class="chev">▾</span></button><div class="faq-a"><p>Uniquement avec l’accord d’un représentant légal. Merci de demander avant de contribuer.</p></div></div>
+          <div class="faq-item"><button class="faq-q" type="button">Comment vous contacter autrement ? <span class="chev">▾</span></button><div class="faq-a"><p>Par e-mail : <a href="mailto:contact@volary.fr">contact@volary.fr</a> — ou via le formulaire ci-dessous.</p></div></div>
         </div>
       </article>
     </section>
@@ -272,13 +276,11 @@
       <h3>✉️ Me contacter</h3>
       <p class="muted">Envoi direct depuis ce site, sans ouvrir votre messagerie.</p>
 
-      <!-- Message de confirmation -->
       <div id="formSuccess" style="display:none; margin-bottom:12px; padding:10px; border-radius:12px; background:#1a3; color:white; font-weight:600;">
         ✅ Message envoyé ! Merci, je te réponds vite.
       </div>
 
       <form class="form" action="https://formsubmit.co/contact@volary.fr" method="POST">
-        <!-- Anti-spam & options -->
         <input type="text" name="_honey" style="display:none">
         <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_subject" value="[volary.fr] Nouveau message du site">
@@ -293,7 +295,7 @@
         <div style="grid-column:span 2;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <label><input type="checkbox" required> J’accepte que mes infos soient utilisées pour répondre.</label>
           <button class="btn primary" type="submit">Envoyer</button>
-          <button class="btn" type="reset">Effacer</button>
+          <button class="btn" type="reset" disabled>Effacer</button>
         </div>
       </form>
     </section>
