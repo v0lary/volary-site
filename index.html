@@ -3,16 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volary — Soutenir le projet</title>
+  <title>VOLARY — Soutenir le projet & les streams</title>
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: rgba(30, 41, 59, 0.7);
-      --border: rgba(255, 255, 255, 0.1);
-      --primary: #38bdf8;
-      --primary-hover: #0284c7;
-      --text: #f8fafc;
+      --bg-color: #07090e;
+      --card-bg: #0f1420;
+      --card-border: rgba(56, 189, 248, 0.12);
+      --card-border-hover: rgba(56, 189, 248, 0.35);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.2);
+      --text-main: #f8fafc;
       --text-muted: #94a3b8;
+      --text-dimmed: #64748b;
+    }
+
+    /* Réduction des animations si l'utilisateur l'exige dans son système */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
 
     * {
@@ -23,339 +35,552 @@
     }
 
     body {
-      background: var(--bg);
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%);
-      color: var(--text);
+      background-color: var(--bg-color);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
+      justify-content: center;
+      padding: 50px 20px;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(14, 165, 233, 0.03) 0%, transparent 40%);
     }
 
     .wrapper {
-      max-width: 580px;
+      max-width: 850px;
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 24px;
     }
 
     .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 36px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .card:hover {
+        border-color: var(--card-border-hover);
+        box-shadow: 0 6px 16px rgba(56, 189, 248, 0.05);
+        transform: translateY(-2px);
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      }
     }
 
     .hero {
       text-align: center;
+      padding: 56px 32px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .brand {
-      font-size: 2.2rem;
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .hero h1 {
+      font-size: 2.6rem;
       font-weight: 900;
-      letter-spacing: 0.1em;
-      background: linear-gradient(135deg, #38bdf8, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
+      letter-spacing: 4px;
+      color: var(--accent);
+      margin-bottom: 12px;
+      text-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
     }
 
-    .subtitle {
+    .hero p {
       color: var(--text-muted);
-      font-size: 1rem;
-      margin-bottom: 2rem;
+      font-size: 1.05rem;
+      margin-bottom: 28px;
+      font-weight: 500;
     }
 
-    .btn-donate {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      width: 100%;
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      color: #ffffff;
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .btn-stripe {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+      color: #07090e;
+      font-weight: 700;
+      padding: 15px 34px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+    }
+
+    .btn-stripe:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-stripe:active {
+      transform: translateY(0);
+    }
+
+    .subtext {
+      display: block;
+      color: var(--text-dimmed);
+      font-size: 0.75rem;
+      margin-top: 20px;
+      line-height: 1.5;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .card-title {
       font-size: 1.15rem;
       font-weight: 700;
-      padding: 1.1rem 1.5rem;
-      border-radius: 14px;
-      text-decoration: none;
-      transition: all 0.25s ease;
-      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
-    }
-
-    .btn-donate:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(2, 132, 199, 0.5);
-    }
-
-    .disclaimer {
-      font-size: 0.8rem;
-      color: #64748b;
-      margin-top: 1.25rem;
-      line-height: 1.4;
-    }
-
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 1rem;
+      color: var(--text-main);
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      body {
+        padding: 20px 12px;
+      }
+      .hero {
+        padding: 36px 20px;
+      }
+      .hero h1 {
+        font-size: 2.1rem;
+      }
     }
 
     .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px 0;
+    }
+
+    .faq-item:first-child {
+      padding-top: 0;
     }
 
     .faq-item:last-child {
       border-bottom: none;
+      padding-bottom: 0;
     }
 
     .faq-question {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #e2e8f0;
-      cursor: pointer;
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      text-align: left;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
     }
 
-    .faq-answer {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 0.5rem;
-      line-height: 1.5;
-      display: none;
+    .faq-question:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 4px;
     }
 
-    .faq-item.active .faq-answer {
-      display: block;
+    .faq-icon {
+      font-size: 1.1rem;
+      color: var(--accent);
+      transition: transform 0.25s ease;
     }
 
-    .faq-item.active .faq-toggle {
+    .faq-item.active .faq-icon {
       transform: rotate(45deg);
     }
 
-    .faq-toggle {
-      transition: transform 0.2s ease;
-      color: var(--primary);
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      transition: max-height 0.25s ease, opacity 0.2s ease, margin-top 0.2s ease;
+      opacity: 0;
     }
 
-    form {
+    .faq-item.active .faq-answer {
+      max-height: 250px;
+      opacity: 1;
+      margin-top: 10px;
+    }
+
+    .contact-notice-box {
+      background-color: rgba(7, 9, 14, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
+      gap: 12px;
     }
 
-    input, textarea {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.8rem 1rem;
-      color: var(--text);
+    .contact-notice-box p {
       font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.2s ease;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
-    input:focus, textarea:focus {
-      border-color: var(--primary);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 90px;
-    }
-
-    .btn-submit {
-      background: #334155;
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 0.8rem;
-      border-radius: 10px;
+    .contact-notice-box a {
+      color: var(--accent);
+      text-decoration: none;
       font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease;
     }
 
-    .btn-submit:hover {
-      background: #475569;
+    .contact-notice-box a:hover, .contact-notice-box a:focus-visible {
+      text-decoration: underline;
     }
 
     footer {
       text-align: center;
-      font-size: 0.8rem;
-      color: #64748b;
-      padding-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-dimmed);
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     footer a {
       color: var(--text-muted);
-      text-decoration: underline;
+      text-decoration: none;
+      transition: color 0.2s;
       cursor: pointer;
     }
 
-    .modal {
-      display: none;
+    footer a:hover, footer a:focus-visible {
+      color: var(--accent);
+    }
+
+    .ai-badge {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.72rem;
+    }
+
+    .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(4px);
-      justify-content: center;
+      background-color: rgba(7, 9, 14, 0.88);
+      display: flex;
       align-items: center;
-      padding: 1rem;
-      z-index: 100;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .modal-content {
-      background: #1e293b;
-      border: 1px solid var(--border);
-      padding: 2rem;
-      border-radius: 16px;
-      max-width: 500px;
-      width: 100%;
-      font-size: 0.85rem;
-      line-height: 1.6;
-      color: #cbd5e1;
+      background-color: #0f1420;
+      border: 1px solid var(--card-border-hover);
+      border-radius: 18px;
+      padding: 36px;
+      max-width: 580px;
+      width: 90%;
       max-height: 85vh;
       overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+      scrollbar-width: thin;
+      scrollbar-color: var(--card-border-hover) #07090e;
     }
 
-    .modal-content h2 {
-      color: var(--text);
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
+    .modal-overlay.open .modal-content {
+      transform: scale(1);
     }
 
-    .close-btn {
-      margin-top: 1.5rem;
-      background: var(--primary);
-      color: #0f172a;
+    .modal-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal-content::-webkit-scrollbar-track {
+      background: #07090e;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+      background-color: var(--card-border-hover);
+      border-radius: 3px;
+    }
+
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 24px;
+    }
+
+    .modal-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-body strong {
+      color: var(--text-main);
+    }
+
+    .btn-modal-close {
+      margin-top: 28px;
+      width: 100%;
+      background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+      color: #07090e;
       border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
+      padding: 13px;
+      border-radius: 10px;
       font-weight: 700;
       cursor: pointer;
-      float: right;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-modal-close:hover, .btn-modal-close:focus-visible {
+      opacity: 0.9;
+    }
+
+    .modal-body a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .modal-body a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
   <div class="wrapper">
-    
-    <!-- Hero Box -->
-    <div class="card hero">
-      <div class="brand">VOLARY</div>
-      <div class="subtitle">Soutenir le projet & les lives</div>
+    <section class="card hero">
+      <h1>VOLARY</h1>
+      <p>Soutenir le projet & les streams</p>
+      <div class="hero-desc">Chaque soutien aide à améliorer les lives, les projets et les expériences interactives Volary.</div>
+      <a href="https://donate.stripe.com/5kQbIU4Cd2EU7D36Lze7m00" target="_blank" rel="noopener noreferrer" class="btn-stripe">Contribuer au projet via Stripe</a>
+      <span class="subtext">Contribution volontaire au projet, sans achat de bien ou de service, sans contrepartie commerciale, sans réduction fiscale et sans reçu fiscal. Versements par principe définitifs, sous réserve des règles applicables en cas d'erreur, de fraude ou de paiement non autorisé.</span>
+    </section>
 
-      <a href="https://donate.stripe.com/5kQbIU4Cd2EU7D36Lze7m00" class="btn-donate" target="_blank" rel="noopener">
-        <span>Faire un don via Stripe</span>
-      </a>
-
-      <div class="disclaimer">
-        Les dons sont entièrement volontaires et sans contrepartie. Ils ne sont pas remboursables.
-      </div>
-    </div>
-
-    <!-- FAQ -->
-    <div class="card">
-      <div class="section-title">Questions fréquentes</div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">
-          <span>À quoi servent les dons ?</span>
-          <span class="faq-toggle">+</span>
+    <div class="grid">
+      <section class="card">
+        <h2 class="card-title">Questions fréquentes</h2>
+        
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-ans-1" onclick="toggleFaq(this)">
+            À quoi servent les contributions ? <span class="faq-icon">+</span>
+          </button>
+          <div id="faq-ans-1" class="faq-answer">
+            Elles aident à financer le matériel de stream, l'hébergement du site et le développement des futurs projets de manière totalement libre.
+          </div>
         </div>
-        <div class="faq-answer">
-          Les dons permettent d'améliorer la qualité du matériel de live, de financer les projets en cours et de soutenir directement le contenu créé sur Volary.
-        </div>
-      </div>
 
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">
-          <span>Le paiement est-il sécurisé ?</span>
-          <span class="faq-toggle">+</span>
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-ans-2" onclick="toggleFaq(this)">
+            Le paiement est-il sécurisé ? <span class="faq-icon">+</span>
+          </button>
+          <div id="faq-ans-2" class="faq-answer">
+            Oui, toutes les transactions sont traitées de manière sécurisée par Stripe Payments Europe, Ltd. Aucune donnée bancaire n'est stockée sur ce site.
+          </div>
         </div>
-        <div class="faq-answer">
-          Oui, toutes les transactions sont traitées directement par Stripe avec un cryptage de niveau bancaire. Aucune donnée bancaire n'est stockée sur ce site.
-        </div>
-      </div>
 
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">
-          <span>Puis-je demander un remboursement ?</span>
-          <span class="faq-toggle">+</span>
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-ans-3" onclick="toggleFaq(this)">
+            Puis-je demander de l’aide en cas d’erreur de paiement ? <span class="faq-icon">+</span>
+          </button>
+          <div id="faq-ans-3" class="faq-answer">
+            En cas d'erreur manifeste de saisie, de double prélèvement ou de litige lié au paiement, vous pouvez me contacter directement par e-mail afin que la situation soit examinée.
+          </div>
         </div>
-        <div class="faq-answer">
-          Conformément à la réglementation sur les soutiens volontaires et dons numériques, tout paiement est définitif et non remboursable.
-        </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- Contact Form -->
-    <div class="card">
-      <div class="section-title">Me contacter</div>
-      <form action="https://formsubmit.co/contact@volary.fr" method="POST">
-        <input type="hidden" name="_subject" value="[volary.fr] Nouveau message du site">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="Pseudo" placeholder="Ton pseudo / nom" required>
-        <input type="email" name="Email" placeholder="Ton adresse e-mail" required>
-        <input type="text" name="Sujet" placeholder="Sujet de ton message" required>
-        <textarea name="Message" placeholder="Ton message..." required></textarea>
-        <button type="submit" class="btn-submit">Envoyer le message</button>
-      </form>
+      <section class="card">
+        <h2 class="card-title">Contact</h2>
+        <div class="contact-notice-box">
+          <p>Le formulaire de contact est temporairement indisponible.</p>
+          <p>Pour toute question, écrivez à <a href="mailto:contact@volary.fr">contact@volary.fr</a></p>
+        </div>
+      </section>
     </div>
 
     <footer>
-      <p>© Volary — <a onclick="openModal()">Mentions légales</a></p>
+      <div>© Volary — SIRET 99059432700035 — Contact : <a href="mailto:contact@volary.fr">contact@volary.fr</a> — <a id="open-modal" role="button" tabindex="0">Mentions légales & Confidentialité</a></div>
+      <div class="ai-badge">✨ Site généré entièrement avec l'IA</div>
     </footer>
-
   </div>
 
-  <!-- Modal Mentions Légales -->
-  <div class="modal" id="legalModal">
+  <div id="legal-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-content">
-      <h2>Mentions Légales</h2>
-      <p><strong>Éditeur du site :</strong> Alexis Ferrario (Volary)</p>
-      <p><strong>SIRET :</strong> 990 594 327 00035</p>
-      <p><strong>Adresse postale :</strong> Adresse non-diffusible au répertoire Sirene (INSEE), transmise à l'hébergeur et aux autorités compétentes conformément à la réglementation.</p>
-      <p><strong>E-mail :</strong> contact@volary.fr</p>
-      <br>
-      <p><strong>Hébergement :</strong> GitHub Inc. (GitHub Pages) / IONOS SE</p>
-      <p><strong>Traitement des paiements :</strong> Stripe Payments Europe, Ltd.</p>
-      <br>
-      <p><strong>Données personnelles :</strong> Les messages envoyés via le formulaire servent uniquement à répondre à vos demandes et ne sont jamais cédés à des tiers.</p>
-      <button class="close-btn" onclick="closeModal()">Fermer</button>
+      <h2 class="modal-title">Mentions Légales & Confidentialité</h2>
+      <div class="modal-body">
+        <p><strong>1. Éditeur du site :</strong> Alexis Ferrario (Volary)<br>
+        Statut : Entrepreneur individuel<br>
+        SIRET : 990 594 327 00035<br>
+        Adresse : Adresse non-diffusible au répertoire Sirene (INSEE) — À confirmer / compléter par une adresse de domiciliation professionnelle si applicable.<br>
+        Contact e-mail : <a href="mailto:contact@volary.fr">contact@volary.fr</a></p>
+
+        <p><strong>2. Prestataires techniques réels :</strong><br>
+        - Hébergeur des fichiers du site : GitHub Inc. (GitHub Pages)<br>
+        - Fournisseur de nom de domaine : [À CONFIRMER]<br>
+        - Fournisseur de messagerie : [À CONFIRMER]<br>
+        - Prestataire d'acheminement des e-mails (formulaire) : [À CONFIRMER]<br>
+        - Gestion des paiements : Stripe Payments Europe, Ltd.</p>
+
+        <p><strong>3. Politique de confidentialité (RGPD) & Formulaire :</strong><br>
+        - <strong>Finalité :</strong> Répondre aux messages transmis par e-mail.<br>
+        - <strong>Données collectées :</strong> Aucune collecte automatisée de données via le site (pas de formulaire actif).<br>
+        - <strong>Durée de conservation :</strong> Durée strictement nécessaire au traitement des e-mails reçus.<br>
+        - <strong>Destinataires :</strong> L'éditeur du site (Alexis Ferrario).<br>
+        - <strong>Transferts hors UE :</strong> Aucun transfert hors UE direct depuis le site.<br>
+        - <strong>Vos droits :</strong> Vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition. Pour les exercer, contactez <a href="mailto:contact@volary.fr">contact@volary.fr</a>.<br>
+        - <strong>Réclamation :</strong> Vous pouvez introduire une réclamation auprès de la CNIL (cnil.fr).</p>
+
+        <p><strong>4. Stockage local et traceurs :</strong><br>
+        Le site n'utilise aucun cookie publicitaire, aucun traceur analytique, aucun outil de mesure d'audience et aucun stockage local de type localStorage.</p>
+
+        <p><strong>5. Nature des contributions et médiation :</strong><br>
+        Contribution volontaire au projet, sans achat de bien ou de service, sans contrepartie commerciale, sans réduction fiscale et sans reçu fiscal.<br>
+        <em>Note sur la médiation :</em> Si les versements sont réellement dépourvus de toute contrepartie et ne correspondent à aucune vente ni prestation, leur qualification ne relève pas nécessairement d’un contrat de consommation. Si une prestation, un avantage ou une récompense est proposé en échange du paiement, les obligations liées à la consommation et à la médiation devront être réévaluées.</p>
+      </div>
+      <button id="close-modal" class="btn-modal-close">Fermer</button>
     </div>
   </div>
 
   <script>
-    function toggleFaq(element) {
-      element.classList.toggle('active');
+    const modal = document.getElementById('legal-modal');
+    const openModalBtn = document.getElementById('open-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+
+    function trapFocus(e) {
+      if (!modal.classList.contains('open')) return;
+      
+      const focusableElements = modal.querySelectorAll('a[href], button:not([disabled]), textarea, input, [tabindex]:not([tabindex="-1"])');
+      if (focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
     }
+
     function openModal() {
-      document.getElementById('legalModal').style.display = 'flex';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      closeModalBtn.focus();
+      window.addEventListener('keydown', trapFocus);
     }
+
     function closeModal() {
-      document.getElementById('legalModal').style.display = 'none';
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', trapFocus);
+      openModalBtn.focus();
+    }
+
+    openModalBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
+    });
+
+    openModalBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal();
+      }
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      closeModal();
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeModal();
+      }
+    });
+
+    function toggleFaq(button) {
+      const item = button.closest('.faq-item');
+      const isActive = item.classList.contains('active');
+      
+      document.querySelectorAll('.faq-item').forEach(el => {
+        el.classList.remove('active');
+        const btn = el.querySelector('.faq-question');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isActive) {
+        item.classList.add('active');
+        button.setAttribute('aria-expanded', 'true');
+      }
     }
   </script>
-
 </body>
 </html>
